@@ -2,6 +2,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
 }
 
 body {
@@ -13,6 +19,8 @@ body {
     direction: rtl;
     overflow-x: hidden;
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Animated UAE flag colors background */
@@ -70,6 +78,8 @@ body {
     color: #333;
     backdrop-filter: blur(10px);
     animation: fadeIn 0.8s ease-out;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
 }
 
 .logo {
@@ -1033,26 +1043,104 @@ h1 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .top-bar {
+        padding: 10px 0;
+    }
+
+    .top-bar-content {
+        flex-direction: column;
+        gap: 10px;
+        padding: 0 15px;
+    }
+
+    .company-info {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .info-item {
+        font-size: 0.8em;
+        text-align: center;
+    }
+
+    .certifications {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .cert-badge {
+        font-size: 0.75em;
+        padding: 4px 10px;
+        text-align: center;
+    }
+
     .container {
-        margin: 20px;
-        padding: 30px 20px;
+        margin: 10px;
+        padding: 25px 15px;
+        max-width: 100%;
+        border-radius: 15px;
     }
     
     h1 {
-        font-size: 2em;
+        font-size: 1.6em;
+        margin-bottom: 10px;
     }
     
     .subtitle {
-        font-size: 1.1em;
+        font-size: 1em;
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 60px;
+        margin-bottom: 15px;
+    }
+
+    .trust-badges {
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .trust-badge {
+        font-size: 0.75em;
+        padding: 5px 10px;
     }
     
     .features {
         grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    .feature {
+        padding: 15px 10px;
+    }
+
+    .feature .icon {
+        font-size: 30px;
+    }
+
+    .feature p {
+        font-size: 0.85em;
     }
     
     .main-btn {
-        font-size: 1.1em;
-        padding: 15px 35px;
+        font-size: 1em;
+        padding: 15px 30px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .btn-text {
+        font-size: 0.9em;
     }
 
     .top-bar-content {
@@ -1969,35 +2057,96 @@ h1 {
         font-size: 1.1em;
     }
 
+    .why-us-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .why-us-header h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    .why-us-subtitle {
+        font-size: 1em;
+    }
+
     .why-us-content {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 25px;
+        margin-bottom: 30px;
     }
 
     .why-us-image {
-        min-height: 300px;
+        min-height: 250px;
+        border-radius: 15px;
     }
 
     .why-us-points {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 15px;
     }
 
     .why-point-card {
-        padding: 25px;
+        padding: 20px 15px;
+    }
+
+    .why-point-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 15px;
     }
 
     .why-icon-wrapper {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
     }
 
     .why-icon {
-        font-size: 2em;
+        font-size: 1.8em;
     }
 
     .why-point-card h3 {
-        font-size: 1.3em;
+        font-size: 1.2em;
+        text-align: right;
+    }
+
+    .why-point-card p {
+        font-size: 0.95em;
+        margin-bottom: 15px;
+    }
+
+    .why-point-number {
+        font-size: 2em;
+        bottom: 15px;
+        left: 15px;
+    }
+
+    .comparison-section {
+        padding: 25px 15px;
+        margin-top: 25px;
+    }
+
+    .comparison-section h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .comparison-header,
+    .comparison-row {
+        grid-template-columns: 1fr;
+        font-size: 0.9em;
+    }
+
+    .comparison-cell {
+        padding: 12px;
+        font-size: 0.95em;
+    }
+
+    .comparison-header .comparison-cell {
+        padding: 15px 12px;
+        font-size: 1em;
     }
 
     .comparison-header,
@@ -2005,15 +2154,523 @@ h1 {
         grid-template-columns: 1fr;
     }
 
+    .jobs-preview-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .jobs-preview-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
     .jobs-list {
         grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .job-card {
+        padding: 20px 15px;
+    }
+
+    .job-card h3 {
+        font-size: 1.3em;
+        margin: 30px 0 15px 0;
+    }
+
+    .job-salary {
+        font-size: 1.1em;
+    }
+
+    .job-description {
+        font-size: 0.95em;
+        margin-bottom: 15px;
+    }
+
+    .view-more-jobs-btn {
+        font-size: 1.1em;
+        padding: 15px 30px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .work-options-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .work-options-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .work-options {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .work-option {
+        padding: 25px 15px;
+    }
+
+    .work-option-icon {
+        font-size: 4em;
+        margin-bottom: 20px;
+    }
+
+    .work-option h3 {
+        font-size: 1.6em;
+        margin-bottom: 15px;
+    }
+
+    .work-option p {
+        font-size: 1em;
+        margin-bottom: 20px;
+    }
+
+    .work-option-benefits li {
+        padding: 15px 20px;
+        font-size: 1em;
+        margin: 10px 0;
+    }
+
+    .work-options-note {
+        padding: 20px 15px;
+        margin-top: 20px;
+    }
+
+    .work-options-note p {
+        font-size: 1em;
     }
 
     .achievements-section {
         grid-template-columns: 1fr;
+        padding: 30px 15px;
+        gap: 25px;
+        margin: 20px 0;
+    }
+
+    .achievements-image {
+        border-radius: 15px;
+    }
+
+    .achievements-content h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .achievements-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .achievement-stat {
+        padding: 20px 15px;
+    }
+
+    .achievement-stat .stat-number {
+        font-size: 2.2em;
+    }
+
+    .achievement-stat .stat-label {
+        font-size: 1em;
+    }
+
+    .chart-item {
+        padding: 15px;
+    }
+
+    .chart-label {
+        font-size: 1em;
+    }
+
+    .chart-value {
+        font-size: 1.1em;
+    }
+
+    .awards-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .awards-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
     }
 
     .awards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .award-item {
+        padding: 30px 20px;
+    }
+
+    .award-icon {
+        font-size: 3em;
+        margin-bottom: 15px;
+    }
+
+    .award-item h3 {
+        font-size: 1.3em;
+        margin-bottom: 12px;
+    }
+
+    .award-item p {
+        font-size: 1em;
+    }
+
+    .testimonials-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .testimonials-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .testimonials {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .testimonial {
+        padding: 20px 15px;
+    }
+
+    .testimonial-content p {
+        font-size: 1em;
+        margin-bottom: 12px;
+    }
+
+    .testimonial-author {
+        font-size: 0.9em;
+    }
+
+    .partners-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .partners-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .partners {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .partner-logo {
+        padding: 25px 15px;
+        font-size: 1em;
+    }
+
+    .faq-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .faq-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .faq-item {
+        padding: 15px;
+    }
+
+    .faq-question {
+        font-size: 1.1em;
+        padding: 10px 0;
+    }
+
+    .faq-answer {
+        font-size: 0.95em;
+    }
+
+    .contact-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .contact-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .contact-info {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .contact-item {
+        padding: 15px;
+        font-size: 1em;
+    }
+
+    .certificates-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .certificates-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .certificates {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .certificate {
+        padding: 15px;
+        font-size: 0.95em;
+    }
+
+    .social-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .social-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .social-links {
         grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .social-link {
+        padding: 20px 15px;
+    }
+
+    .social-icon {
+        font-size: 2em;
+    }
+
+    .social-text {
+        font-size: 1em;
+    }
+
+    .news-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .news-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .news-list {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .news-item {
+        padding: 20px 15px;
+    }
+
+    .news-item h3 {
+        font-size: 1.2em;
+        margin: 25px 0 12px 0;
+    }
+
+    .news-item p {
+        font-size: 1em;
+        margin-bottom: 12px;
+    }
+
+    .news-badge {
+        top: 10px;
+        left: 10px;
+        padding: 5px 12px;
+        font-size: 0.75em;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .stat-item {
+        padding: 20px 15px;
+    }
+
+    .stat-number {
+        font-size: 2em;
+    }
+
+    .stat-label {
+        font-size: 0.9em;
+    }
+
+    .about-section {
+        padding: 30px 15px;
+        margin: 20px 0;
+    }
+
+    .about-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    .about-section p {
+        font-size: 1em;
+        margin-bottom: 20px;
+    }
+
+    .footer-note {
+        margin-top: 20px;
+        padding: 12px;
+    }
+
+    .footer-note p {
+        font-size: 0.9em;
+        line-height: 1.6;
+    }
+
+    /* Modal improvements for mobile */
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px 15px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .modal-body {
+        font-size: 0.95em;
+    }
+
+    .join-modal-content {
+        width: 95%;
+        margin: 5% auto;
+        padding: 20px 15px;
+    }
+
+    .progress-steps {
+        gap: 10px;
+        padding: 15px 0;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1em;
+    }
+
+    .step-label {
+        font-size: 0.8em;
+    }
+
+    /* Input improvements for mobile */
+    input[type="tel"],
+    input[type="text"] {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        -webkit-appearance: none;
+        border-radius: 10px;
+    }
+
+    /* Button improvements */
+    button {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    /* Prevent text selection on mobile */
+    .main-btn,
+    .join-cta-btn,
+    .view-more-jobs-btn {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Improve scrolling */
+    .modal-content,
+    .join-modal-content {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Fix for iOS safe area */
+    @supports (padding: max(0px)) {
+        .container {
+            padding-left: max(15px, env(safe-area-inset-left));
+            padding-right: max(15px, env(safe-area-inset-right));
+        }
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .container {
+        margin: 5px;
+        padding: 20px 10px;
+    }
+
+    h1 {
+        font-size: 1.4em;
+    }
+
+    .subtitle {
+        font-size: 0.9em;
+    }
+
+    .logo {
+        font-size: 50px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .feature {
+        padding: 12px 8px;
+    }
+
+    .feature .icon {
+        font-size: 25px;
+    }
+
+    .feature p {
+        font-size: 0.8em;
+    }
+
+    .main-btn {
+        font-size: 0.95em;
+        padding: 12px 20px;
+    }
+
+    .join-cta-box h3 {
+        font-size: 1.1em;
+    }
+
+    .join-cta-box p {
+        font-size: 0.85em;
+    }
+
+    .join-cta-btn {
+        font-size: 0.95em;
+        padding: 12px 20px;
     }
 }
