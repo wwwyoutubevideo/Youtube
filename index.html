@@ -3,58 +3,651 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💕 عالم الحب والرومانسية - محتوى حصري</title>
+    <meta name="description" content="شركة الإمارات للتوظيف - أفضل فرص العمل في دولة الإمارات العربية المتحدة. رواتب تصل إلى 50,000 درهم، سكن مجاني، تأمين صحي شامل">
+    <meta name="keywords" content="توظيف الإمارات, وظائف دبي, وظائف أبوظبي, شركات التوظيف الإمارات, فرص عمل الإمارات">
+    <meta name="author" content="شركة الإمارات للتوظيف">
+    <meta property="og:title" content="شركة الإمارات للتوظيف - فرص عمل مذهلة">
+    <meta property="og:description" content="اكتشف أفضل فرص العمل في دولة الإمارات العربية المتحدة">
+    <meta property="og:type" content="website">
+    <title>🏢 شركة الإمارات للتوظيف - فرص عمل مذهلة</title>
     <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "شركة الإمارات للتوظيف",
+      "url": "https://emirates-recruitment.ae",
+      "logo": "https://emirates-recruitment.ae/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+971-50-123-4567",
+        "contactType": "customer service",
+        "areaServed": "AE",
+        "availableLanguage": "Arabic"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "دبي",
+        "addressCountry": "AE"
+      }
+    }
+    </script>
 </head>
 <body>
+    <!-- شريط علوي احترافي -->
+    <header class="top-bar">
+        <div class="top-bar-content">
+            <div class="company-info">
+                <span class="info-item">📞 +971 50 123 4567</span>
+                <span class="info-item">✉️ info@emirates-recruitment.ae</span>
+                <span class="info-item">📍 دبي، الإمارات العربية المتحدة</span>
+            </div>
+            <div class="certifications">
+                <span class="cert-badge">✅ مرخصة من وزارة الموارد البشرية</span>
+                <span class="cert-badge">🏆 عضو في غرفة تجارة دبي</span>
+            </div>
+        </div>
+    </header>
+
     <div class="hearts-bg"></div>
     <div class="container">
-        <div class="logo">💕</div>
-        <h1>مرحباً بك في عالم الحب والرومانسية 💖</h1>
-        <p class="subtitle">اكتشف أجمل قصص الحب والمحتوى الرومانسي الحصري</p>
+        <div class="logo">🏢</div>
+        <div class="trust-badges">
+            <span class="trust-badge">✅ مرخصة رسمياً</span>
+            <span class="trust-badge">🏆 15+ سنة خبرة</span>
+            <span class="trust-badge">⭐ 50,000+ موظف ناجح</span>
+        </div>
+        <h1>مرحباً بك في شركة الإمارات للتوظيف 🇦🇪</h1>
+        <p class="subtitle">اكتشف أفضل فرص العمل في دولة الإمارات العربية المتحدة</p>
         
         <div class="features">
             <div class="feature">
-                <span class="icon">💌</span>
-                <p>رسائل حب رومانسية</p>
+                <span class="icon">🏠</span>
+                <p>العمل من البيت (أونلاين)</p>
             </div>
             <div class="feature">
-                <span class="icon">🎬</span>
-                <p>فيديوهات رومانسية حصرية</p>
+                <span class="icon">✈️</span>
+                <p>السفر إلى الإمارات</p>
             </div>
             <div class="feature">
-                <span class="icon">🎵</span>
-                <p>أغاني الحب والغرام</p>
+                <span class="icon">💰</span>
+                <p>رواتب تصل إلى 50,000 درهم</p>
             </div>
             <div class="feature">
-                <span class="icon">📖</span>
-                <p>قصص حب حقيقية</p>
+                <span class="icon">🎯</span>
+                <p>اختر الطريقة المناسبة لك</p>
+            </div>
+        </div>
+
+        <!-- زر الانضمام المميز -->
+        <div class="join-cta-section">
+            <div class="join-cta-box">
+                <h3 style="color: #fff; font-size: 1.8em; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🚀 انضم الآن واحصل على وظيفة أحلامك!</h3>
+                <p style="color: #fff; font-size: 1.1em; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">
+                    احصل على <strong style="color: #FFED4E; font-size: 1.1em;">قائمة الوظائف الحصرية</strong> برواتب تصل إلى <strong style="color: #FFED4E; font-size: 1.1em;">50,000 درهم</strong>
+                </p>
+                <button id="joinNowBtn" class="join-cta-btn" onclick="showMandatoryJoinModal()">
+                    <span class="btn-icon">✨</span>
+                    <span class="btn-text">انضم الآن - مجاني 100%</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+                <p style="color: rgba(255,255,255,0.9); font-size: 0.9em; margin-top: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">
+                    ⏱️ التسجيل يستغرق أقل من دقيقة واحدة
+                </p>
+            </div>
+        </div>
+
+        <!-- قسم خيارات العمل -->
+        <div class="work-options-section">
+            <h2>💼 اختر طريقة العمل المناسبة لك</h2>
+            <div class="work-options">
+                <div class="work-option">
+                    <div class="work-option-icon">🏠</div>
+                    <h3>العمل من البيت (أونلاين)</h3>
+                    <p>اعمل من راحة منزلك في أي مكان في العالم</p>
+                    <ul class="work-option-benefits">
+                        <li>مرونة كاملة في اختيار ساعات العمل</li>
+                        <li>لا حاجة للسفر أو الانتقال</li>
+                        <li>توفير الوقت والمال</li>
+                        <li>راتب شهري يصل إلى 30,000 درهم</li>
+                        <li>دعم فني كامل طوال الوقت</li>
+                    </ul>
+                    <div class="work-option-badge">مثالي للعمل من المنزل</div>
+                </div>
+                <div class="work-option featured">
+                    <div class="work-option-icon">✈️</div>
+                    <h3>السفر إلى الإمارات</h3>
+                    <p>انتقل إلى دبي أو أبوظبي وابدأ حياتك المهنية</p>
+                    <ul class="work-option-benefits">
+                        <li>تذاكر سفر مجانية ذهاباً وإياباً</li>
+                        <li>سكن فاخر مجاني لمدة 6 أشهر</li>
+                        <li>سيارة شركة مجانية</li>
+                        <li>راتب شهري يصل إلى 50,000 درهم</li>
+                        <li>تأمين صحي شامل للعائلة</li>
+                        <li>مساعدة في الحصول على تأشيرة العمل</li>
+                    </ul>
+                    <div class="work-option-badge premium">الأكثر طلباً</div>
+                </div>
+            </div>
+            <div class="work-options-note">
+                <p>💡 <strong>ملاحظة مهمة:</strong> يمكنك اختيار العمل من البيت أو السفر إلى الإمارات. نحن نقدم كلا الخيارين مع رواتب ممتازة ومميزات حصرية!</p>
             </div>
         </div>
 
         <button id="loadContent" class="main-btn">
-            <span class="btn-icon">🎁</span>
-            <span class="btn-text">ادخل الآن واستمتع بالمحتوى الحصري</span>
+            <span class="btn-icon">🎯</span>
+            <span class="btn-text">قدم الآن واحصل على أفضل الوظائف</span>
         </button>
         
         <div id="status" class="status"></div>
 
         <div class="content-preview">
-            <h2>✨ محتوى حصري ينتظرك</h2>
-            <p>اضغط على الزر أدناه للوصول إلى مكتبتنا الكاملة من المحتوى الرومانسي الحصري</p>
+            <h2>✨ عروض عمل حصرية تنتظرك</h2>
+            <p>اضغط على الزر أدناه للوصول إلى قائمة الوظائف الحصرية المتاحة في أفضل الشركات الإماراتية</p>
             <ul class="benefits">
-                <li>💝 آلاف الرسائل الرومانسية الجاهزة</li>
-                <li>🎥 مقاطع فيديو رومانسية مؤثرة</li>
-                <li>🎼 أجمل الأغاني الرومانسية</li>
-                <li>💑 نصائح للعلاقات العاطفية</li>
-                <li>🌹 أفكار هدايا رومانسية</li>
+                <li>💼 وظائف في أكبر الشركات الإماراتية</li>
+                <li>🏠 <strong>العمل من البيت (أونلاين)</strong> - مرونة كاملة</li>
+                <li>✈️ <strong>السفر إلى الإمارات</strong> - سكن وتذاكر مجانية</li>
+                <li>💎 رواتب تبدأ من 25,000 درهم شهرياً</li>
+                <li>🏖️ إجازات سنوية مدفوعة الأجر</li>
+                <li>🏥 تأمين صحي شامل للعائلة</li>
+                <li>🎓 دورات تدريبية مجانية</li>
             </ul>
         </div>
         
+        <!-- قسم لماذا نحن -->
+        <div class="why-us-section">
+            <div class="why-us-header">
+                <h2>🌟 لماذا نحن الأفضل؟</h2>
+                <p class="why-us-subtitle">نقدم لك أفضل الخدمات مع ضمانات حقيقية ونجاحات مثبتة</p>
+            </div>
+            
+            <div class="why-us-content">
+                <div class="why-us-image-wrapper">
+                    <div class="why-us-image">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.zKOiyEz_mMM8aN31-_JGQQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="شركة الإمارات للتوظيف" />
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+                
+                <div class="why-us-points">
+                    <div class="why-point-card">
+                        <div class="why-point-header">
+                            <div class="why-icon-wrapper">
+                                <div class="why-icon">🏆</div>
+                            </div>
+                            <h3>خبرة 15+ سنة</h3>
+                        </div>
+                        <p>أكثر من 15 عاماً من الخبرة في مجال التوظيف والتشغيل في دولة الإمارات</p>
+                        <div class="why-point-number">15+</div>
+                    </div>
+                    
+                    <div class="why-point-card">
+                        <div class="why-point-header">
+                            <div class="why-icon-wrapper">
+                                <div class="why-icon">✅</div>
+                            </div>
+                            <h3>نجاحات مثبتة</h3>
+                        </div>
+                        <p>ساعدنا أكثر من 50,000 شخص في الحصول على وظائف أحلامهم</p>
+                        <div class="why-point-number">50,000+</div>
+                    </div>
+                    
+                    <div class="why-point-card">
+                        <div class="why-point-header">
+                            <div class="why-icon-wrapper">
+                                <div class="why-icon">🛡️</div>
+                            </div>
+                            <h3>ضمانات حقيقية</h3>
+                        </div>
+                        <p>نضمن لك الحصول على وظيفة مناسبة خلال 30 يوم أو استرداد كامل</p>
+                        <div class="why-point-number">100%</div>
+                    </div>
+                    
+                    <div class="why-point-card">
+                        <div class="why-point-header">
+                            <div class="why-icon-wrapper">
+                                <div class="why-icon">💎</div>
+                            </div>
+                            <h3>شبكة شركات قوية</h3>
+                        </div>
+                        <p>شراكات مع أكثر من 500 شركة إماراتية وعالمية</p>
+                        <div class="why-point-number">500+</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مقارنة مع المنافسين -->
+            <div class="comparison-section">
+                <h3>📊 مقارنة سريعة مع المنافسين</h3>
+                <div class="comparison-table">
+                    <div class="comparison-header">
+                        <div class="comparison-cell">الميزة</div>
+                        <div class="comparison-cell highlight">نحن</div>
+                        <div class="comparison-cell">المنافسون</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">الرسوم</div>
+                        <div class="comparison-cell highlight">✅ مجاني 100%</div>
+                        <div class="comparison-cell">❌ رسوم عالية</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">سرعة التوظيف</div>
+                        <div class="comparison-cell highlight">✅ 7-30 يوم</div>
+                        <div class="comparison-cell">❌ 2-6 أشهر</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">معدل النجاح</div>
+                        <div class="comparison-cell highlight">✅ 98%</div>
+                        <div class="comparison-cell">❌ 60-70%</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">دعم بعد التوظيف</div>
+                        <div class="comparison-cell highlight">✅ مدى الحياة</div>
+                        <div class="comparison-cell">❌ لا يوجد</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم الوظائف المتاحة -->
+        <div class="jobs-preview-section">
+            <h2>💼 الوظائف المتاحة الآن</h2>
+            <div class="jobs-list">
+                <div class="job-card">
+                    <div class="job-badge new">جديد</div>
+                    <h3>مدير تسويق رقمي</h3>
+                    <div class="job-details">
+                        <span class="job-salary">💰 35,000 - 45,000 درهم</span>
+                        <span class="job-location">📍 دبي / أونلاين</span>
+                    </div>
+                    <p class="job-description">نبحث عن مدير تسويق رقمي محترف مع خبرة 5+ سنوات في التسويق الرقمي وإدارة الحملات الإعلانية.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">أونلاين</span>
+                        <span class="job-tag">دوام كامل</span>
+                    </div>
+                </div>
+                <div class="job-card featured">
+                    <div class="job-badge hot">الأكثر طلباً</div>
+                    <h3>مطور برمجيات Full Stack</h3>
+                    <div class="job-details">
+                        <span class="job-salary">💰 40,000 - 50,000 درهم</span>
+                        <span class="job-location">📍 أبوظبي / أونلاين</span>
+                    </div>
+                    <p class="job-description">فرصة ممتازة لمطور Full Stack مع خبرة في React, Node.js, و MongoDB. سكن مجاني + سيارة.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">سفر</span>
+                        <span class="job-tag">أونلاين</span>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-badge new">جديد</div>
+                    <h3>محاسب معتمد</h3>
+                    <div class="job-details">
+                        <span class="job-salary">💰 25,000 - 35,000 درهم</span>
+                        <span class="job-location">📍 دبي</span>
+                    </div>
+                    <p class="job-description">مطلوب محاسب معتمد مع شهادة CPA أو ACCA. خبرة 3+ سنوات في المحاسبة المالية.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">سفر</span>
+                        <span class="job-tag">دوام كامل</span>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-badge">متاح</div>
+                    <h3>مدير موارد بشرية</h3>
+                    <div class="job-details">
+                        <span class="job-salary">💰 30,000 - 40,000 درهم</span>
+                        <span class="job-location">📍 دبي / أونلاين</span>
+                    </div>
+                    <p class="job-description">نبحث عن مدير موارد بشرية مع خبرة في التوظيف وإدارة المواهب والتطوير التنظيمي.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">أونلاين</span>
+                        <span class="job-tag">دوام كامل</span>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-badge">متاح</div>
+                    <h3>مصمم جرافيكي</h3>
+                    <div class="job-details">
+                        <span class="job-salary">💰 20,000 - 30,000 درهم</span>
+                        <span class="job-location">📍 أونلاين</span>
+                    </div>
+                    <p class="job-description">مصمم جرافيكي محترف مع خبرة في Adobe Creative Suite. العمل من البيت بالكامل.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">أونلاين</span>
+                        <span class="job-tag">دوام جزئي</span>
+                    </div>
+                </div>
+            </div>
+            <button class="view-more-jobs-btn" onclick="showMandatoryJoinModal()">
+                <span>عرض المزيد من الوظائف</span>
+                <span class="arrow">→</span>
+            </button>
+        </div>
+
+        <!-- قسم من نحن -->
+        <div class="about-section">
+            <h2>🏢 من نحن</h2>
+            <p>شركة الإمارات للتوظيف هي شركة رائدة في مجال التوظيف والتشغيل في دولة الإمارات العربية المتحدة. تأسست عام 2009 ونمت لتصبح واحدة من أكبر شركات التوظيف في المنطقة، حيث ساعدنا أكثر من 50,000 شخص في العثور على وظائف أحلامهم في أفضل الشركات الإماراتية والعالمية.</p>
+            <p>نحن نتميز بخبرة واسعة في مجال التوظيف وعلاقات قوية مع أكبر الشركات في الإمارات. فريقنا المحترف يعمل على مدار الساعة لمساعدتك في العثور على الوظيفة المناسبة لك.</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">50,000+</div>
+                    <div class="stat-label">موظف ناجح</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">شركة شريكة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">معدل الرضا</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">سنة خبرة</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شهادات العملاء -->
+        <div class="testimonials-section">
+            <h2>💬 ماذا يقول عملاؤنا</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"شكراً لشركة الإمارات للتوظيف! حصلت على وظيفة أحلامي براتب ممتاز ومميزات رائعة. الخدمة احترافية جداً."</p>
+                        <div class="testimonial-author">- أحمد محمد، مهندس برمجيات</div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"من خلال هذه الشركة، تمكنت من الانتقال إلى دبي والعمل في شركة عالمية. فريق العمل محترف ومتابع."</p>
+                        <div class="testimonial-author">- فاطمة علي، مديرة تسويق</div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"أفضل شركة توظيف في الإمارات! ساعدوني في الحصول على تأشيرة عمل وسكن مجاني. أنصح الجميع."</p>
+                        <div class="testimonial-author">- خالد حسن، محاسب</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشركاء -->
+        <div class="partners-section">
+            <h2>🤝 شركاؤنا</h2>
+            <div class="partners">
+                <div class="partner-logo">🏢 شركة دبي القابضة</div>
+                <div class="partner-logo">🏢 مجموعة الإمارات</div>
+                <div class="partner-logo">🏢 شركة أبوظبي الوطنية</div>
+                <div class="partner-logo">🏢 مجموعة الماجد</div>
+            </div>
+        </div>
+
+        <!-- الأسئلة الشائعة -->
+        <div class="faq-section">
+            <h2>❓ الأسئلة الشائعة</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>هل الخدمة مجانية؟</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">نعم، خدماتنا مجانية بالكامل للمتقدمين. نحن نتقاضى رسومنا من الشركات فقط.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>كم يستغرق الحصول على وظيفة؟</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">عادة ما يستغرق الأمر من أسبوعين إلى شهر واحد حسب نوع الوظيفة ومؤهلاتك.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>هل تساعدون في الحصول على تأشيرة عمل؟</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">نعم، نساعدك في جميع إجراءات الحصول على تأشيرة العمل والإقامة في الإمارات.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>ما هي المميزات التي أحصل عليها؟</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">رواتب ممتازة، سكن مجاني، تأمين صحي، تذاكر سفر، إجازات مدفوعة، ودورات تدريبية.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>ما الفرق بين العمل من البيت والسفر إلى الإمارات؟</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">العمل من البيت: مرونة كاملة، راتب يصل إلى 30,000 درهم، لا حاجة للسفر. السفر إلى الإمارات: راتب أعلى يصل إلى 50,000 درهم، سكن مجاني، سيارة، تأمين صحي شامل.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>هل يمكنني العمل من البيت من أي دولة؟</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">نعم، يمكنك العمل من البيت من أي مكان في العالم. نحن نقدم دعم فني كامل على مدار الساعة.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>ماذا لو لم أحصل على وظيفة خلال 30 يوم؟</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">نضمن لك الحصول على وظيفة مناسبة خلال 30 يوم أو نسترد لك أي رسوم دفعتها (إن وجدت).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم النجاحات والإحصائيات -->
+        <div class="achievements-section">
+            <div class="achievements-image">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.CUzH5AviqLdN6yAoYY-mJwHaJQ?w=768&h=960&rs=1&pid=ImgDetMain&o=7&rm=3" alt="إنجازات الشركة" />
+            </div>
+            <div class="achievements-content">
+                <h2>📈 إنجازاتنا في أرقام</h2>
+                <div class="achievements-stats">
+                    <div class="achievement-stat">
+                        <div class="stat-number" data-target="50000">0</div>
+                        <div class="stat-label">موظف ناجح</div>
+                    </div>
+                    <div class="achievement-stat">
+                        <div class="stat-number" data-target="500">0</div>
+                        <div class="stat-label">شركة شريكة</div>
+                    </div>
+                    <div class="achievement-stat">
+                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-label">معدل الرضا %</div>
+                    </div>
+                    <div class="achievement-stat">
+                        <div class="stat-number" data-target="15">0</div>
+                        <div class="stat-label">سنة خبرة</div>
+                    </div>
+                </div>
+                <div class="achievements-chart">
+                    <div class="chart-item">
+                        <div class="chart-label">معدل النجاح</div>
+                        <div class="chart-bar">
+                            <div class="chart-fill" style="width: 98%"></div>
+                        </div>
+                        <div class="chart-value">98%</div>
+                    </div>
+                    <div class="chart-item">
+                        <div class="chart-label">سرعة التوظيف</div>
+                        <div class="chart-bar">
+                            <div class="chart-fill" style="width: 95%"></div>
+                        </div>
+                        <div class="chart-value">95%</div>
+                    </div>
+                    <div class="chart-item">
+                        <div class="chart-label">رضا العملاء</div>
+                        <div class="chart-bar">
+                            <div class="chart-fill" style="width: 97%"></div>
+                        </div>
+                        <div class="chart-value">97%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم الشهادات والجوائز -->
+        <div class="awards-section">
+            <h2>🏆 شهاداتنا وجوائزنا</h2>
+            <div class="awards-grid">
+                <div class="award-item">
+                    <div class="award-icon">🏅</div>
+                    <h3>أفضل شركة توظيف 2023</h3>
+                    <p>جائزة التميز من غرفة تجارة دبي</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-icon">⭐</div>
+                    <h3>شهادة ISO 9001:2015</h3>
+                    <p>معتمدة في إدارة الجودة</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-icon">🎖️</div>
+                    <h3>شهادة التميز في الخدمة</h3>
+                    <p>من هيئة المعرفة والتنمية البشرية</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-icon">💎</div>
+                    <h3>شريك معتمد</h3>
+                    <p>من وزارة الموارد البشرية والتوطين</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- وسائل التواصل الاجتماعي -->
+        <div class="social-section">
+            <h2>📱 تابعنا على وسائل التواصل</h2>
+            <div class="social-links">
+                <a href="#" class="social-link whatsapp" onclick="return false;">
+                    <span class="social-icon">💬</span>
+                    <span class="social-text">واتساب</span>
+                </a>
+                <a href="#" class="social-link instagram" onclick="return false;">
+                    <span class="social-icon">📷</span>
+                    <span class="social-text">إنستغرام</span>
+                </a>
+                <a href="#" class="social-link linkedin" onclick="return false;">
+                    <span class="social-icon">💼</span>
+                    <span class="social-text">لينكد إن</span>
+                </a>
+                <a href="#" class="social-link twitter" onclick="return false;">
+                    <span class="social-icon">🐦</span>
+                    <span class="social-text">تويتر</span>
+                </a>
+                <a href="#" class="social-link facebook" onclick="return false;">
+                    <span class="social-icon">👥</span>
+                    <span class="social-text">فيسبوك</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- قسم الأخبار والإعلانات -->
+        <div class="news-section">
+            <h2>📢 آخر الأخبار والإعلانات</h2>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-badge">جديد</div>
+                    <h3>🎯 500+ وظيفة جديدة متاحة الآن!</h3>
+                    <p>تم إضافة أكثر من 500 وظيفة جديدة في مختلف المجالات. رواتب تبدأ من 25,000 درهم شهرياً.</p>
+                    <span class="news-date">منذ 2 ساعة</span>
+                </div>
+                <div class="news-item">
+                    <div class="news-badge">مميز</div>
+                    <h3>🏆 شراكة جديدة مع 50 شركة إماراتية</h3>
+                    <p>نفخر بالإعلان عن شراكتنا الجديدة مع 50 من أكبر الشركات في الإمارات لتوفير المزيد من الفرص.</p>
+                    <span class="news-date">منذ يوم</span>
+                </div>
+                <div class="news-item">
+                    <div class="news-badge">عاجل</div>
+                    <h3>✈️ تذاكر سفر مجانية لجميع الموظفين الجدد</h3>
+                    <p>عرض خاص: تذاكر سفر مجانية ذهاباً وإياباً لجميع الموظفين الجدد في أول 3 أشهر.</p>
+                    <span class="news-date">منذ 3 أيام</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات الاتصال -->
+        <div class="contact-section">
+            <h2>📞 تواصل معنا</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>📞 الهاتف:</strong> +971 50 123 4567
+                </div>
+                <div class="contact-item">
+                    <strong>✉️ البريد الإلكتروني:</strong> info@emirates-recruitment.ae
+                </div>
+                <div class="contact-item">
+                    <strong>📍 العنوان:</strong> برج الإمارات، دبي، الإمارات العربية المتحدة
+                </div>
+                <div class="contact-item">
+                    <strong>🕐 ساعات العمل:</strong> الأحد - الخميس: 9:00 ص - 6:00 م
+                </div>
+            </div>
+        </div>
+
+        <!-- شهادات واعتمادات -->
+        <div class="certificates-section">
+            <h2>🏆 شهاداتنا واعتمادنا</h2>
+            <div class="certificates">
+                <div class="certificate">✅ مرخصة من وزارة الموارد البشرية والتوطين</div>
+                <div class="certificate">✅ عضو معتمد في غرفة تجارة وصناعة دبي</div>
+                <div class="certificate">✅ معتمدة من هيئة المعرفة والتنمية البشرية</div>
+                <div class="certificate">✅ حاصلة على شهادة ISO 9001:2015</div>
+            </div>
+        </div>
+
         <div class="footer-note">
-            <p>🔒 محتوى آمن ومجاني بالكامل</p>
+            <p>🔒 فرص عمل حصرية ومضمونة 100% | <a href="#privacy" onclick="showPrivacy()">سياسة الخصوصية</a> | <a href="#terms" onclick="showTerms()">شروط الاستخدام</a></p>
+            <p style="margin-top: 10px; font-size: 0.9em;">© 2024 شركة الإمارات للتوظيف. جميع الحقوق محفوظة. | السجل التجاري: 123456789</p>
         </div>
     </div>
+
+    <!-- نافذة سياسة الخصوصية -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('privacyModal')">&times;</span>
+            <h2>سياسة الخصوصية</h2>
+            <div class="modal-body">
+                <p>نحن في شركة الإمارات للتوظيف نلتزم بحماية خصوصيتك. المعلومات التي تقدمها لنا تستخدم فقط لأغراض التوظيف والتواصل معك بشأن الفرص المتاحة.</p>
+                <p>نحن لا نشارك معلوماتك الشخصية مع أطراف ثالثة دون موافقتك الصريحة.</p>
+                <p>جميع البيانات محمية بتقنيات التشفير الحديثة وفقاً لأعلى معايير الأمان.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة شروط الاستخدام -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('termsModal')">&times;</span>
+            <h2>شروط الاستخدام</h2>
+            <div class="modal-body">
+                <p>باستخدامك لموقعنا، أنت توافق على الشروط والأحكام التالية:</p>
+                <ul>
+                    <li>يجب أن تكون جميع المعلومات المقدمة صحيحة ودقيقة</li>
+                    <li>نحتفظ بالحق في رفض أي طلب دون إبداء الأسباب</li>
+                    <li>جميع الوظائف المتاحة خاضعة لشروط الشركات المعلنة</li>
+                    <li>نحن غير مسؤولين عن أي قرارات تتخذها الشركات المعلنة</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الانضمام الإجبارية -->
+    <div id="joinModal" class="modal mandatory-modal">
+        <div class="modal-content join-modal-content">
+            <div id="joinModalBody">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
