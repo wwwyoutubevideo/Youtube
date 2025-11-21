@@ -1088,7 +1088,7 @@ function showMandatoryJoinModal() {
             </div>
             <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin: 20px 0; border-right: 4px solid #FFD700;">
                 <p style="color: #333; font-size: 1.1em; margin: 10px 0; font-weight: 600;">
-                    📱 ابدأ بإدخال رقم هاتفك الإماراتي (9 أرقام)
+                    📱 ابدأ بإدخال رقم هاتفك  (9 أرقام)
                 </p>
                 <p style="color: #666; font-size: 0.95em; margin: 10px 0;">
                     يجب أن يبدأ الرقم بأحد الأرقام التالية: <strong style="color: #1E90FF;">77, 78, 71, 70, 73</strong>
